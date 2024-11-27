@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/sessionProvider/sessionProvider";
-
+ 
 export const metadata: Metadata = {
   title: "I-DAI",
   description: "How do i die?",

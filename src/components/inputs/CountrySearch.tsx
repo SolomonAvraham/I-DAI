@@ -111,7 +111,7 @@ export default function CountrySearch({
             setCityResults([]);
           }}
           placeholder={"Search Country"}
-          className="border p-2 w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
+          className="border  bg-white  p-2 w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
         />
         {results.length > 0 && !selectedCountry && (
           <div className="border mt-1 bg-white max-h-60 overflow-y-auto shadow-lg">
@@ -141,7 +141,7 @@ export default function CountrySearch({
             value={citySearch}
             onChange={(e) => setCitySearch(e.target.value)}
             placeholder={`Search cities in ${selectedCountry}...`}
-            className="border text-center p-2 w-full rounded-lg placeholder-shown:text-sm placeholder-shown:text-center"
+            className="border  bg-white  text-center p-2 w-full rounded-lg placeholder-shown:text-sm placeholder-shown:text-center"
           />
           {cityResults.length > 0 && (
             <div className="border mt-2 bg-white max-h-60 overflow-y-auto shadow-lg">

@@ -1,11 +1,11 @@
 "use client";
 
 import TermsPopup from "@/components/pages/termsPopup/termsPopup";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function HomePageButton() {
-  const router = useRouter();
+  //const router = useRouter();
 
   const [showPopup, setShowPopup] = useState(false);
 

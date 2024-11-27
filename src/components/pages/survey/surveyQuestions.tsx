@@ -4,6 +4,7 @@ import QuestionCard from "@/components/pages/survey/questionCard";
 import { finalizeSurvey } from "@/services/survey";
 import useSurveyStore from "@/store/surveyStore";
 import React, { useState } from "react";
+import ShareButtons from "./shareButtons";
 
 const surveyQuestions = [
   {
@@ -305,7 +306,7 @@ const Survey = () => {
     name: string,
     value: string | number | boolean
   ) => {
-    updateResponse(name, value);  
+    updateResponse(name, value);
   };
 
   const handleBack = () => {
@@ -324,16 +325,24 @@ const Survey = () => {
     }
   };
 
+  const shareUrl = "http://i-dai.com/share/123"; // Replace 123 with dynamic user result ID
+  const title = "Ultimate Personality Quiz";
+  const description = "Check out your quiz result on I-DAI!";
+  const image =
+    "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&h=600&fit=crop&auto=format";
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4 py-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       <div
-        className="relative   bg-white border rounded-lg shadow-lg p-8 md:p-12 lg:p-16 max-w-4xl w-full"
+        className="relative  bg-white border rounded-lg shadow-lg p-8 md:p-12 lg:p-16 max-w-4xl w-full"
         style={{
-          height: "990px", // Consistent fixed height for the parent
-          overflow: "hidden", // Prevent overflow of the content
+          width: "2200px",
+          height: "1000px",
+          maxHeight: "1000px",
+          overflow: "hidden",
         }}
       >
-        {!isComplete ? (
+        {isComplete ? (
           <div className="h-full py-10">
             <QuestionCard
               category={surveyQuestions[currentStep].category}
@@ -342,9 +351,14 @@ const Survey = () => {
             />
           </div>
         ) : (
-          <div className="flex   justify-center items-center h-full gap-4 text-4xl md:text-5xl font-semibold mb-4 text-center">
-            <div>You will die of:</div>
-            <div>COVID-19</div>
+          <div className="flex flex-col   justify-center items-center h-full gap-4 text-4xl md:text-5xl font-semibold mb-4 text-center">
+            <div>You will die of: COVID-19</div>
+            <ShareButtons
+              shareUrl={shareUrl}
+              title={title}
+              description={description}
+              image={image}
+            />
           </div>
         )}
 
@@ -352,7 +366,7 @@ const Survey = () => {
         {!isComplete && (
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-10 px-8 ">
             <button
-              className="px-6 py-2 bg-blue-900 text-white rounded-lg text-lg md:text-xl hover:bg-blue-700 transition"
+              className="px-6 disabled:bg-slate-400 py-2 bg-blue-900 text-white rounded-lg text-lg md:text-xl hover:bg-blue-700 transition"
               onClick={handleBack}
               disabled={currentStep === 0}
             >

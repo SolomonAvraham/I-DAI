@@ -37,7 +37,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
         }}
       >
         {/* Questions */}
-        <div className="flex flex-col justify-center  gap-5  h-full  ">
+        <div className="flex flex-col justify-center  gap-5  h-full text-black">
           {questions.map((q, index) => (
             <div
               key={index}
@@ -56,7 +56,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                   id={q.name}
                   type="text"
                   name={q.name}
-                  className="border rounded-md px-4 py-2 text-base  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border  bg-white  rounded-md px-4 py-2 text-base  focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={(e) => onInputChange(q.name, e.target.value)}
                   required
                   aria-label={q.question}
@@ -68,7 +68,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                   id={q.name}
                   type="number"
                   name={q.name}
-                  className="border rounded-md px-4 py-2 text-center  w-24  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border  bg-white  rounded-md px-4 py-2 text-center  w-24  focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={(e) => onInputChange(q.name, e.target.value)}
                   required
                   aria-label={q.question}
@@ -81,13 +81,13 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                   {q.options.map((option, idx) => (
                     <label
                       key={idx}
-                      className="inline-flex items-center gap-2 text-gray-700"
+                      className="inline-flex items-center gap-2"
                     >
                       <input
                         type="radio"
                         name={q.name}
                         value={option}
-                        className="w-11 focus:ring-2 focus:ring-blue-500"
+                        className="w-11 cursor-pointer"
                         onChange={(e) => onInputChange(q.name, e.target.value)}
                         required
                       />
@@ -101,7 +101,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                 <select
                   id={q.name}
                   name={q.name}
-                  className="border rounded-md px-4 py-2 text-base   focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border  bg-white rounded-md px-4 py-2 text-base   focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={(e) => onInputChange(q.name, e.target.value)}
                   required
                   aria-label={q.question}

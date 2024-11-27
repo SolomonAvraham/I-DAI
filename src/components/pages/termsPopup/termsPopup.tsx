@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { termsAndPolicy } from "@/utils/termsAndPolicy";
 
 export default function TermsPopup({
