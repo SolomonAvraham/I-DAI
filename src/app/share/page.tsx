@@ -1,15 +1,69 @@
 import Image from "next/image";
 import Head from "next/head";
+import { Metadata } from "next";
 
- 
-export default function SharePage( ) {
- // const { id } = params;
+const imageUrl =
+  "https://images.unsplash.com/photo-1709884732294-90379fee354c?q=80&w=3028&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://i-dai.com"),
+  title: {
+    default: "I-DAI - Discover How Will You Die",
+    template: "%s | I-Dai Personality Quiz",
+  },
+  description:
+    "Take the ultimate personality quiz and discover how will you die",
+  openGraph: {
+    title: "I-Dai - Discover How Will You Die",
+    description:
+      "Take the ultimate personality quiz and discover how will you die",
+    url: "https://i-dai.com",
+    siteName: "I-DAI",
+    images: [
+      {
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        alt: "I-DAI",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "I-Dai - Discover How Will You Die",
+    description:
+      "Take the ultimate personality quiz and discover how will you die",
+    images: [imageUrl], // Replace with your actual Twitter card image path
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  verification: {
+    google: "your-google-site-verification-code", // Replace with actual verification code if used
+  },
+};
+
+export default function SharePage() {
+  // const { id } = params;
 
   const pageTitle = "Ultimate Personality Quiz";
   const description = `Discover your personalized quiz results for ID: !`;
   const shareUrl = `https://i-dai.com/share/`;
-  const imageUrl =
-    "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&h=600&fit=crop&auto=format";
 
   return (
     <>

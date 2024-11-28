@@ -325,7 +325,7 @@ const Survey = () => {
     }
   };
 
-  const shareUrl = "http://i-dai.com/share/123"; // Replace 123 with dynamic user result ID
+  const shareUrl = "http://i-dai.com/share/"; // Replace 123 with dynamic user result ID
   const title = "Ultimate Personality Quiz";
   const description = "Check out your quiz result on I-DAI!";
   const image =
