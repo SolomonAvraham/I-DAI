@@ -9,15 +9,13 @@ const imageUrl =
 export const metadata: Metadata = {
   metadataBase: new URL("https://i-dai.com"),
   title: {
-    default: "I-DAI - Discover Your How Will You Die",
-    template: "%s | I-Dai Personality Quiz",
+    default: "I-DAI - Discover Your Fate",
+    template: "%s | I-DAI Personality Quiz",
   },
-  description:
-    "Take the ultimate personality quiz and discover how will you die",
+  description: "Explore quizzes and discover insights with I-DAI.",
   openGraph: {
-    title: "I-Dai - Discover Your How Will You Die",
-    description:
-      "Take the ultimate personality quiz and discover how will you die",
+    title: "I-DAI - Discover Your Fate",
+    description: "Explore quizzes and discover insights with I-DAI.",
     url: "https://i-dai.com",
     siteName: "I-DAI",
     images: [
@@ -33,9 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "I-Dai - Discover Your How Will You Die",
-    description:
-      "Take the ultimate personality quiz and discover how will you die",
+    title: "I-DAI - Discover Your Fate",
+    description: "Explore quizzes and discover insights with I-DAI.",
     images: [imageUrl], // Replace with your actual Twitter card image path
   },
   robots: {

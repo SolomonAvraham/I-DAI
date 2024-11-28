@@ -5,11 +5,11 @@ import {
   FacebookShareButton,
   FacebookIcon,
   TwitterShareButton,
-  TwitterIcon,
   LinkedinShareButton,
   LinkedinIcon,
   WhatsappShareButton,
   WhatsappIcon,
+  XIcon,
 } from "react-share";
 
 type ShareButtonsProps = {
@@ -26,11 +26,11 @@ export default function ShareButtons({
  }: ShareButtonsProps) {
   return (
     <div className="flex justify-center gap-4 mt-4">
-      <FacebookShareButton url={shareUrl} hashtag="#QuizResult">
+      <FacebookShareButton url={shareUrl} hashtag="#HowWillYouDie">
         <FacebookIcon size={48} round className="hover:scale-105" />
       </FacebookShareButton>
       <TwitterShareButton url={shareUrl} title={description}>
-        <TwitterIcon size={48} round className="hover:scale-105" />
+        <XIcon size={48} round className="hover:scale-105" />
       </TwitterShareButton>
       <LinkedinShareButton url={shareUrl} title={title} summary={description}>
         <LinkedinIcon size={48} round className="hover:scale-105" />

@@ -5,8 +5,10 @@ import { finalizeSurvey } from "@/services/survey";
 import useSurveyStore from "@/store/surveyStore";
 import React, { useState } from "react";
 import ShareButtons from "./shareButtons";
+import Image from "next/image";
 
-const surveyQuestions = [
+
+ const surveyQuestions = [
   {
     category: "General Information",
     questions: [
@@ -325,11 +327,11 @@ const Survey = () => {
     }
   };
 
-  const shareUrl = "http://i-dai.com/share/"; // Replace 123 with dynamic user result ID
-  const title = "Ultimate Personality Quiz";
-  const description = "Check out your quiz result on I-DAI!";
+  const shareUrl = "http://i-dai.com/share/";
+  const title = "You Probably Will Die Of COVID-19 .";
+  const description = "Do you want to know your destiny? click here !";
   const image =
-    "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&h=600&fit=crop&auto=format";
+    "https://plus.unsplash.com/premium_photo-1674850274669-c6cb57ea5265?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
@@ -342,7 +344,7 @@ const Survey = () => {
           overflow: "hidden",
         }}
       >
-        {isComplete ? (
+        {!isComplete ? (
           <div className="h-full py-10">
             <QuestionCard
               category={surveyQuestions[currentStep].category}
@@ -351,8 +353,12 @@ const Survey = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-col   justify-center items-center h-full gap-4 text-4xl md:text-5xl font-semibold mb-4 text-center">
+          <div className="flex flex-col text-black  items-center h-full gap-6 text-4xl md:text-5xl font-semibold mb-4 text-center">
             <div>You will die of: COVID-19</div>
+            <Image src={image} alt="Image" width={500} height={500} />
+            <h3 className="text-lg md:text-4xl ">
+              Stay cautious and stay safe!
+            </h3>
             <ShareButtons
               shareUrl={shareUrl}
               title={title}
