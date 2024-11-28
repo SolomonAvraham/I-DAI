@@ -10,8 +10,8 @@ export default function HomePageButton() {
   const [showPopup, setShowPopup] = useState(false);
 
   const handleClick = () => {
-    //router.push("/api/signin");
-    //router.push("/api/signin");
+    //router.push("/api/auth/signin");
+    //router.push("/api/auth/signin");
 
     setShowPopup(true);
   };

@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      const response = await fetch("/api/signout", {
+      const response = await fetch("/api/auth/signout", {
         method: "POST",
       });
 
