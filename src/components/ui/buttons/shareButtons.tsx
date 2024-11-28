@@ -23,19 +23,28 @@ export default function ShareButtons({
   shareUrl,
   title,
   description,
- }: ShareButtonsProps) {
+}: ShareButtonsProps) {
   return (
     <div className="flex justify-center gap-4 mt-4">
       <FacebookShareButton url={shareUrl} hashtag="#HowWillYouDie">
         <FacebookIcon size={48} round className="hover:scale-105" />
       </FacebookShareButton>
-      <TwitterShareButton url={shareUrl} title={description}>
+      <TwitterShareButton
+        url={shareUrl}
+        title={title}
+        hashtags={["HowWillYouDie"]}
+      >
         <XIcon size={48} round className="hover:scale-105" />
       </TwitterShareButton>
-      <LinkedinShareButton url={shareUrl} title={title} summary={description}>
+      <LinkedinShareButton
+        source="https://i-dai.com"
+        url={shareUrl}
+        title={title}
+        summary={description}
+      >
         <LinkedinIcon size={48} round className="hover:scale-105" />
       </LinkedinShareButton>
-      <WhatsappShareButton url={shareUrl} title={description}>
+      <WhatsappShareButton url={shareUrl} title={description} separator="">
         <WhatsappIcon size={48} round className="hover:scale-105" />
       </WhatsappShareButton>
     </div>

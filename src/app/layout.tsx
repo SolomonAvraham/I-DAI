@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/sessionProvider/sessionProvider";
 
 const imageUrl =
-  "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&h=600&fit=crop&auto=format";
+  "https://images.pexels.com/photos/1270184/pexels-photo-1270184.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://i-dai.com"),
@@ -64,6 +64,27 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
+      <head>
+        <title>I-DAI - Predict How You Will Die</title>
+        <meta
+          name="description"
+          content="I-DAI predicts how you will die based on your answers to various questions. A fun and insightful experience."
+        />
+        <meta
+          name="keywords"
+          content="death prediction, future prediction, health, I-DAI, answers, mortality"
+        />
+        <meta name="author" content="Dev-Sol" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="I-DAI | Predict How You Will Die" />
+        <meta
+          property="og:description"
+          content="I-DAI predicts how you will die based on your answers to various questions. A fun and insightful experience."
+        />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:url" content="https://i-dai.com" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className="min-h-screen ">
         <SessionProvider session={session}>{children}</SessionProvider>
       </body>

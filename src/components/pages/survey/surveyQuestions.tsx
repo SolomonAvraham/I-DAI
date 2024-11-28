@@ -4,7 +4,7 @@ import QuestionCard from "@/components/pages/survey/questionCard";
 import { finalizeSurvey } from "@/services/survey";
 import useSurveyStore from "@/store/surveyStore";
 import React, { useState } from "react";
-import ShareButtons from "./shareButtons";
+import ShareButtons from "../../ui/buttons/shareButtons";
 import Image from "next/image";
 
 

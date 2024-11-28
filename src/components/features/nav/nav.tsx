@@ -9,6 +9,8 @@ export default function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const creditsLeft = localStorage.getItem("attempts") || 1;
+
   useEffect(() => {
     if (status !== "authenticated") {
       router.push("/");
@@ -48,7 +50,7 @@ export default function Navbar() {
         {/* Credits */}
         <div className="text-sm text-left cursor-default">
           <p className="font-semibold">Welcome, {user.name}!</p>
-          <p className="text-gray-500">Credits Left: {1}</p>
+          <p className="text-gray-200">Credits Left: {creditsLeft}</p>
         </div>
         {/* User Info */}
         <div className="dropdown dropdown-end">

@@ -18,13 +18,19 @@ const PaymentPage: React.FC = () => {
             title="1 Pack"
             description="One attempt to discover how you might die."
             price="$1.99"
-            onClick={() => router.push("/user")}
+            onClick={() => {
+              router.push("/user")
+              localStorage.setItem("attempts", "1")
+            }}
           />
           <PaymentOption
             title="Family Pack"
             description="Five attempts for you and your loved ones to explore how they might die."
             price="$5"
-            onClick={() => router.push("/user")}
+            onClick={() => {
+              router.push("/user")
+              localStorage.setItem("attempts", "5")
+            }}
           />
         </div>
       </div>
