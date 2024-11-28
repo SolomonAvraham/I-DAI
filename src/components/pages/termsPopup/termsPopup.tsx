@@ -24,7 +24,7 @@ export default function TermsPopup({
   // useEffect(() => {
   //   const hasAgreed = Cookies.get("termsAgreed");
   //   if (hasAgreed) {
-  //     router.push("/api/auth/signin");
+  //     router.push("/api/signin");
   //   }
   // }, [router]);
 
@@ -38,7 +38,7 @@ export default function TermsPopup({
   const handleAgree = () => {
     if (isChecked.is18Plus && isChecked.agreeTerms) {
       //Cookies.set("termsAccepted", "true", { expires: 365 });
-      router.push("/api/auth/signin");
+      router.push("/api/signin");
     } else {
       alert("Please check all required boxes.");
     }

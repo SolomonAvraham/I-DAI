@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
- 
+
 export default function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      const response = await fetch("/api/auth/signout", {
+      const response = await fetch("/api/signout", {
         method: "POST",
       });
 
@@ -73,7 +73,7 @@ export default function Navbar() {
               </a>
             </li>
 
-            <li >
+            <li>
               <button
                 onClick={handleSignOut}
                 className="btn btn-error w-1/2 mx-auto"

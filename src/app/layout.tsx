@@ -2,10 +2,61 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/sessionProvider/sessionProvider";
- 
+
+const imageUrl =
+  "https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&h=600&fit=crop&auto=format";
+
 export const metadata: Metadata = {
-  title: "I-DAI",
-  description: "How do i die?",
+  metadataBase: new URL("https://i-dai.com"),
+  title: {
+    default: "I-DAI - Discover Your How Will You Die",
+    template: "%s | I-Dai Personality Quiz",
+  },
+  description:
+    "Take the ultimate personality quiz and discover how will you die",
+  openGraph: {
+    title: "I-Dai - Discover Your How Will You Die",
+    description:
+      "Take the ultimate personality quiz and discover how will you die",
+    url: "https://i-dai.com",
+    siteName: "I-DAI",
+    images: [
+      {
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        alt: "I-DAI",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "I-Dai - Discover Your How Will You Die",
+    description:
+      "Take the ultimate personality quiz and discover how will you die",
+    images: [imageUrl], // Replace with your actual Twitter card image path
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  verification: {
+    google: "your-google-site-verification-code", // Replace with actual verification code if used
+  },
 };
 
 export default async function RootLayout({
