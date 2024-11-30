@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 
-type CountrySearchProps = {
+type CountriesAndCitiesSearchProps = {
   onCountrySelect: (country: string) => void;
   onCitySelect: (city: string) => void;
 };
 
-export default function CountrySearch({
+export default function CountriesAndCitiesSearch({
   onCountrySelect,
   onCitySelect,
-}: CountrySearchProps) {
+}: CountriesAndCitiesSearchProps) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<
     { countryName: string; emoji: string }[]
@@ -74,15 +74,15 @@ export default function CountrySearch({
           )}&search=${encodeURIComponent(citySearch)}`
         );
         const data = await res.json();
-       if (data) {
-         if (!data[0]) {
-           setError("City not found");
-         } else {
-           setCityResults(data);
-         }
-       } else {
-         setCityResults([]);
-       }
+        if (data) {
+          if (!data[0]) {
+            setError("City not found");
+          } else {
+            setCityResults(data);
+          }
+        } else {
+          setCityResults([]);
+        }
       } catch (error) {
         console.error("Error fetching cities:", error);
       } finally {

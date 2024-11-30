@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "You Probably Will Die Of COVID-19",
     description: "Do you want to know your destiny? click here!",
-    url: "https://i-dai.com/share/",
+    url: "https://i-dai.com/result/",
     siteName: "I-DAI",
     images: [
       {
@@ -43,12 +43,12 @@ export default function SharePage() {
           content="Do you want to know your destiny? click here!"
         />
         <meta property="og:image" content={imageUrl} />
-        <meta property="og:url" content="https://i-dai.com/share" />
+        <meta property="og:url" content="https://i-dai.com/result" />
         <meta property="og:type" content="website" />
         <meta property="fb:app_id" content={process.env.FACEBOOK_CLIENT_ID} />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="https://i-dai.com/share" />
+        <meta name="twitter:site" content="https://i-dai.com/result" />
         <meta
           name="twitter:title"
           content="You Probably Will Die Of COVID-19"

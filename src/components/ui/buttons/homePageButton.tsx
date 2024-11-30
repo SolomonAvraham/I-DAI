@@ -1,6 +1,6 @@
 "use client";
 
-import TermsPopup from "@/components/pages/termsPopup/termsPopup";
+import TermsPopup from "@/components/ui/popups/termsPopup";
 //import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 

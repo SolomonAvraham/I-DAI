@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ISurveyResponse extends Document {
+export interface IQuestions extends Document {
   age: number;
   gender: string;
   country: string;
@@ -32,7 +32,7 @@ export interface ISurveyResponse extends Document {
   frequentTravel: string;
 }
 
-const SurveyResponseSchema: Schema = new Schema(
+const questionsSchema: Schema = new Schema(
   {
     age: { type: Number, required: true },
     gender: { type: String, enum: ["Male", "Female"], required: true },
@@ -61,7 +61,7 @@ const SurveyResponseSchema: Schema = new Schema(
     trafficViolations: { type: Number, required: true },
     cleanWater: {
       type: String,
-      required: false,  
+      required: false,
     },
     healthcareAccess: { type: Number, min: 1, max: 5, required: true },
     sleepHours: { type: Number, min: 1, max: 12, required: true },
@@ -82,8 +82,11 @@ const SurveyResponseSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const SurveyResponse =
-  mongoose.models.SurveyResponse ||
-  mongoose.model<ISurveyResponse>("SurveyResponse", SurveyResponseSchema);
+const questions =
+  mongoose.models.questions ||
+  mongoose.model<IQuestions>(
+    "questions",
+    questionsSchema
+  );
 
-export default SurveyResponse;
+export default questions;

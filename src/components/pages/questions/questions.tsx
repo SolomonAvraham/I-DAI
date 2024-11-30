@@ -1,14 +1,13 @@
 "use client";
 
-import QuestionCard from "@/components/pages/survey/questionCard";
-import { finalizeSurvey } from "@/services/survey";
-import useSurveyStore from "@/store/surveyStore";
+import QuestionCard from "@/components/pages/questions/questionCard";
+import { finalizeQuestions } from "@/services/questions";
+import useQuestionsStore from "@/store/questionsStore";
 import React, { useState } from "react";
 import ShareButtons from "../../ui/buttons/shareButtons";
 import Image from "next/image";
 
-
- const surveyQuestions = [
+const exampleQuestions = [
   {
     category: "General Information",
     questions: [
@@ -23,7 +22,7 @@ import Image from "next/image";
         question: "Country and City:",
         type: "custom",
         name: "countryCity",
-        component: "CountrySearch",
+        component: "CountriesAndCitiesSearch",
       },
       { question: "Yearly income in USD:", type: "number", name: "income" },
       { question: "BMI (Body Mass Index):", type: "number", name: "bmi" },
@@ -298,11 +297,11 @@ import Image from "next/image";
   },
 ];
 
-const Survey = () => {
+const Questions = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  const { responses, updateResponse } = useSurveyStore();
+  const { responses, updateResponse } = useQuestionsStore();
 
   const handleInputChange = (
     name: string,
@@ -318,16 +317,16 @@ const Survey = () => {
   };
 
   const handleNext = () => {
-    if (currentStep < surveyQuestions.length - 1) {
+    if (currentStep < exampleQuestions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      console.log("Survey Responses from Store:", responses); // Log or process responses
+      console.log("Questions Responses from Store:", responses); // Log or process responses
       setIsComplete(true);
-      finalizeSurvey();
+      finalizeQuestions();
     }
   };
 
-  const shareUrl = "http://i-dai.com/share/";
+  const shareUrl = "http://i-dai.com/result/";
   const title = "You Probably Will Die Of COVID-19 .";
   const description = "Do you want to know your destiny? click here !";
   const image =
@@ -347,8 +346,8 @@ const Survey = () => {
         {!isComplete ? (
           <div className="h-full py-10">
             <QuestionCard
-              category={surveyQuestions[currentStep].category}
-              questions={surveyQuestions[currentStep].questions}
+              category={exampleQuestions[currentStep].category}
+              questions={exampleQuestions[currentStep].questions}
               onInputChange={handleInputChange}
             />
           </div>
@@ -382,7 +381,7 @@ const Survey = () => {
               className="px-6 py-2 bg-blue-900 text-white rounded-lg text-lg md:text-xl hover:bg-blue-700 transition"
               onClick={handleNext}
             >
-              {currentStep < surveyQuestions.length - 1 ? "Next" : "Finish"}
+              {currentStep < exampleQuestions.length - 1 ? "Next" : "Finish"}
             </button>
           </div>
         )}
@@ -391,4 +390,4 @@ const Survey = () => {
   );
 };
 
-export default Survey;
+export default Questions;

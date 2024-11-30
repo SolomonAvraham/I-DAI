@@ -1,4 +1,4 @@
-import Country from "@/db/models/country";
+import CountriesAndCities from "@/db/models/countriesAndCities";
 import connectToDatabase from "@/db";
 import { NextResponse } from "next/server";
 
@@ -17,7 +17,9 @@ export async function GET(req: Request) {
       );
     }
 
-    const result = await Country.findOne({ countryName: country }).sort();
+    const result = await CountriesAndCities.findOne({
+      countryName: country,
+    }).sort();
 
     if (!result) {
       return NextResponse.json(
@@ -37,7 +39,7 @@ export async function GET(req: Request) {
 
     let filteredCities = cities;
     if (search && search.trim()) {
-      const searchRegex = new RegExp(search, "i"); // Case-insensitive regex
+      const searchRegex = new RegExp(search, "i");
       filteredCities = cities.filter((city) => searchRegex.test(city));
     }
 

@@ -13,8 +13,8 @@ export default function VerifyUser() {
             <FaLongArrowAltRight />
           </span>
           <div className="card bg-black hover:bg-slate-700">
-            <Link href={"/user/survey"}>
-              <div className="card-body text-5xl text-white">Survey</div>
+            <Link href={"/user/questions"}>
+              <div className="card-body text-5xl text-white">Click here, to start</div>
             </Link>
           </div>
         </div>

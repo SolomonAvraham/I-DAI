@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CountrySearch from "@/components/inputs/CountrySearch";
+import CountriesAndCitiesSearch from "@/components/ui/inputs/countrySearch";
 
  
 
@@ -116,8 +116,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               )}
 
               {/* Custom Component Handling */}
-              {q.type === "custom" && q.component === "CountrySearch" && (
-                <CountrySearch
+              {q.type === "custom" && q.component === "CountriesAndCitiesSearch" && (
+                <CountriesAndCitiesSearch
                   onCountrySelect={(country) =>
                     onInputChange("country", country)
                   }

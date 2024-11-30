@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-const CountrySchema = new Schema(
+const CountriesAndCitiesSchema = new Schema(
   {
     countryName: {
       type: String,
@@ -20,13 +20,17 @@ const CountrySchema = new Schema(
   }
 );
 
-export interface ICountry extends Document {
+export interface ICountriesAndCities extends Document {
   countryName: string;
   cities: string[];
   emoji: string;
 }
 
-const Country: Model<ICountry> =
-  mongoose.models.Country || mongoose.model<ICountry>("Country", CountrySchema);
+const CountriesAndCities: Model<ICountriesAndCities> =
+  mongoose.models.CountriesAndCities ||
+  mongoose.model<ICountriesAndCities>(
+    "CountriesAndCities",
+    CountriesAndCitiesSchema
+  );
 
-export default Country;
+export default CountriesAndCities;
