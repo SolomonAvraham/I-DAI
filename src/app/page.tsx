@@ -2,7 +2,7 @@ import HomePageButton from "@/components/ui/buttons/homePageButton";
 
 export default function Home() {
   return (
-    <div className="bg-black bg-opacity-5  relative">
+    <div className="bg-black text-white bg-opacity-5 relative h-screen">
       <video
         autoPlay
         loop
@@ -12,16 +12,25 @@ export default function Home() {
       >
         <source src="/video/skull.mp4" type="video/mp4" />
       </video>
-      <div className="flex flex-col p-11 z-10 gap-20 text-white justify-center items-center h-screen">
-        <div className="text-center font-bold tracking-widest">
-          <h2 className="-tracking-wider text-left  lg:text-6xl xl:text-7xl text-4xl">
+
+      <div className="min-h-screen grid">
+        <div className="font-semibold p-3 mt-10">
+          <h1 className="tracking-wider text-3xl md:text-6xl lg:text-8xl xl:text-9xl ">
             Statistically Speaking:
-          </h2>
-          <h1 className="lg:text-7xl xl:text-9xl text-4xl text-center">
-            While Life Ends, Data Lives
           </h1>
+          <h2 className=" tracking-wide text-[1.7rem] md:text-6xl lg:text-8xl xl:text-9xl ">
+            While Life Ends, Data Lives
+          </h2>
         </div>
-        <HomePageButton />
+
+        <div className="flex flex-col items-center text-center font-semibold gap-10">
+          <h2 className=" text-3xl md:text-5xl xl:text-7xl ">
+            Do you want to know
+            <br />
+            How will you die?
+          </h2>
+          <HomePageButton />
+        </div>
       </div>
     </div>
   );

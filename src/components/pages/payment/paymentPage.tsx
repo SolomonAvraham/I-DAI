@@ -10,9 +10,10 @@ const PaymentPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
       <div className="max-w-4xl w-full">
-        <h1 className="md:text-7xl font-bold mb-6 text-center">
+        <h1 className="text-4xl tracking-wide text-black md:text-7xl font-bold text-center">
           Choose Your Plan
         </h1>
+        <hr className="border-t mx-auto mt-1  py-3" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PaymentOption
             title="1 Pack"
@@ -26,7 +27,8 @@ const PaymentPage: React.FC = () => {
           <PaymentOption
             title="Family Pack"
             description="Five attempts for you and your loved ones to explore how they might die."
-            price="$5"
+            price="$4.99"
+            discount="$9.95"
             onClick={() => {
               router.push("/user")
               localStorage.setItem("attempts", "5")

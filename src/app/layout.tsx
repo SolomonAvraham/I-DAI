@@ -9,7 +9,7 @@ const imageUrl =
 export const metadata: Metadata = {
   metadataBase: new URL("https://i-dai.com"),
   title: {
-    default: "I-DAI - Discover Your Fate",
+    default: "I-DAI - Discover Your Faith",
     template: "%s | I-DAI Personality Quiz",
   },
   description: "Explore quizzes and discover insights with I-DAI.",

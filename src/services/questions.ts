@@ -2,7 +2,6 @@ import useQuestionsStore from "@/store/questionsStore";
 
 export const finalizeQuestions = async () => {
   const { responses } = useQuestionsStore.getState();
-  console.log("Questions Responses:", responses);
   const completeResponses = {
     ...responses,
     cleanWater: responses.cleanWater || "No",
@@ -21,7 +20,6 @@ export const finalizeQuestions = async () => {
     }
 
     const data = await res.json();
-    console.log("questions saved successfully:", data);
   } catch (error) {
     console.error("Error saving questions:", error);
   }

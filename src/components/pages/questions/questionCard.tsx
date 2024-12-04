@@ -3,16 +3,18 @@
 import React from "react";
 import CountriesAndCitiesSearch from "@/components/ui/inputs/countrySearch";
 
- 
-
 type QuestionCardProps = {
   category: string;
   questions: {
     question: string;
     type: string;
     name: string;
-    options?: string[];
+    options?:  number[] | string[];
     component?: string;
+    min?: number;
+    max?: number;
+    defaultValue?: number;
+    description?: string;
   }[];
   onInputChange: (name: string, value: string | number | boolean) => void;
 };
@@ -32,8 +34,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
       <div
         className="border rounded-lg shadow-md bg-white w-full flex-1 overflow-y-auto"
         style={{
-          padding: "1.5rem", // Padding inside the card
-          maxHeight: "100%", // Restrict the height to fit within the parent
+          padding: "1.5rem",
+          maxHeight: "100%",
         }}
       >
         {/* Questions */}
@@ -64,25 +66,29 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               )}
 
               {q.type === "number" && (
-                <input
-                  id={q.name}
-                  type="number"
-                  name={q.name}
-                  className="border  bg-white  rounded-md px-4 py-2 text-center  w-24  focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => onInputChange(q.name, e.target.value)}
-                  required
-                  aria-label={q.question}
-                  min={0}
-                />
+                <div className="flex flex-col items-center gap-1">
+                  <input
+                    id={q.name}
+                    type="number"
+                    name={q.name}
+                    className="border  bg-white  rounded-md px-4 py-2 text-center  w-24  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => onInputChange(q.name, e.target.value)}
+                    required
+                    aria-label={q.question}
+                    min={q.min ?? 0}
+                    max={q.max ?? 120}
+                    defaultValue={q.defaultValue ? q.defaultValue : 0}
+                  />
+                  {q.description && (
+                    <p className="text-xs text-gray-500">{q.description}</p>
+                  )}
+                </div>
               )}
 
               {q.type === "radio" && q.options && (
                 <div className="flex  items-center justify-center  gap-4">
                   {q.options.map((option, idx) => (
-                    <label
-                      key={idx}
-                      className="inline-flex items-center gap-2"
-                    >
+                    <label key={idx} className="inline-flex items-center gap-2">
                       <input
                         type="radio"
                         name={q.name}
@@ -98,32 +104,40 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               )}
 
               {q.type === "select" && q.options && (
-                <select
-                  id={q.name}
-                  name={q.name}
-                  className="border  bg-white rounded-md px-4 py-2 text-base   focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => onInputChange(q.name, e.target.value)}
-                  required
-                  aria-label={q.question}
-                >
-                  <option value="">Select</option>
-                  {q.options.map((option, idx) => (
-                    <option key={idx} value={option}>
-                      {option}
+                <>
+                  <select
+                    id={q.name}
+                    name={q.name}
+                    className="border  bg-white rounded-md px-4 py-2 text-base   focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => onInputChange(q.name, e.target.value)}
+                    required
+                    aria-label={q.question}
+                  >
+                    <option value="">
+                      {q.defaultValue ?? "Select an option"}
                     </option>
-                  ))}
-                </select>
+                    {q.options.map((option, idx) => (
+                      <option key={idx} value={option}  >
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  {q.description && (
+                    <p className="text-xs text-gray-500">{q.description}</p>
+                  )}{" "}
+                </>
               )}
 
               {/* Custom Component Handling */}
-              {q.type === "custom" && q.component === "CountriesAndCitiesSearch" && (
-                <CountriesAndCitiesSearch
-                  onCountrySelect={(country) =>
-                    onInputChange("country", country)
-                  }
-                  onCitySelect={(city) => onInputChange("city", city)}
-                />
-              )}
+              {q.type === "custom" &&
+                q.component === "CountriesAndCitiesSearch" && (
+                  <CountriesAndCitiesSearch
+                    onCountrySelect={(country) =>
+                      onInputChange("country", country)
+                    }
+                    onCitySelect={(city) => onInputChange("city", city)}
+                  />
+                )}
             </div>
           ))}
         </div>

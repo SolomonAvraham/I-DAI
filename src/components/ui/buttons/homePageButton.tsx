@@ -16,13 +16,12 @@ export default function HomePageButton() {
     setShowPopup(true);
   };
   return (
-    <>
-      {" "}
+    <> 
       <button
         onClick={handleClick}
-        className="bg-slate-800  hover:bg-slate-600 px-6 py-3 justify-center rounded-md text-white flex flex-col font-bold text-xl md:text-3xl lg:text-5xl xl:text-6xl tracking-widest"
+        className="bg-slate-800  hover:bg-slate-600 px-6 py-3 justify-center rounded-md text-white flex flex-col font-bold text-xl md:text-3xl lg:text-4xl xl:text-5xl tracking-widest"
       >
-        Do you want to know how will you die?
+        START
       </button>
       <TermsPopup showPopup={showPopup} setShowPopup={setShowPopup} />
     </>

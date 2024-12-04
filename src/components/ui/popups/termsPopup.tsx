@@ -51,8 +51,8 @@ export default function TermsPopup({
   if (!showPopup) return null;
 
   return (
-    <div className="fixed  text-black inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+    <div className="fixed  text-black inset-0   bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-11/12 lg:w-full relative">
         {/* Close Button */}
         <button
           className="absolute top-1  md:top-3 md:text-2xl left-3  md:left-5 text-gray-500 hover:text-gray-800 hover:scale-125 transition-transform"
@@ -118,17 +118,17 @@ export default function TermsPopup({
           <label className="flex items-center">
             <input
               type="checkbox"
-              className="checkbox checkbox-primary mr-2"
+              className="checkbox  mr-2 bg-slate-200"
               checked={isChecked.is18Plus}
               onChange={() => handleCheckboxChange("is18Plus")}
               required
             />
             <span className="text-sm font-semibold">I AM 18+ YEARS OLD</span>
           </label>
-          <label className="flex items-center">
+          <label className="flex items-center ">
             <input
               type="checkbox"
-              className="checkbox checkbox-primary mr-2"
+              className="checkbox mr-2 bg-slate-200"
               checked={isChecked.agreeTerms}
               onChange={() => handleCheckboxChange("agreeTerms")}
               required

@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      screens: {
+        'xl': '1440px',
+        '2xl': '1920px',
+      }
     },
   },
   plugins: [require("daisyui")],

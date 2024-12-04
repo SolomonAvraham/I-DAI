@@ -3,19 +3,12 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
+ 
 export default function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const creditsLeft = localStorage.getItem("attempts") || 1;
-
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.push("/");
-    }
-  }, [status, router]);
+  const creditsLeft = localStorage.getItem("attempts");
 
   if (status !== "authenticated") {
     return null;
@@ -28,8 +21,7 @@ export default function Navbar() {
       });
 
       if (response.ok) {
-        console.log("Signed out successfully");
-        router.push("/");
+         router.push("/");
       } else {
         console.error("Signout failed");
       }
@@ -50,7 +42,7 @@ export default function Navbar() {
         {/* Credits */}
         <div className="text-sm text-left cursor-default">
           <p className="font-semibold">Welcome, {user.name}!</p>
-          <p className="text-gray-200">Credits Left: {creditsLeft}</p>
+          <p className="text-gray-200">Credits Left: {creditsLeft ?? 1}</p>
         </div>
         {/* User Info */}
         <div className="dropdown dropdown-end">
