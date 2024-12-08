@@ -14,8 +14,8 @@ export default function Home() {
       </video>
 
       <div className="min-h-screen grid">
-        <div className="font-semibold p-3 mt-10">
-          <h1 className="tracking-wider text-3xl md:text-6xl lg:text-8xl xl:text-9xl ">
+        <div className="font-semibold ps-3 md:ps-8 mt-10">
+          <h1 className="tracking-wider  text-3xl md:text-6xl lg:text-8xl xl:text-9xl ">
             Statistically Speaking:
           </h1>
           <h2 className=" tracking-wide text-[1.7rem] md:text-6xl lg:text-8xl xl:text-9xl ">

@@ -1,4 +1,6 @@
-export const questions = [
+import { Category } from "@/types/types";
+
+export const questions: Category[] = [
   {
     category: "General Information",
     questions: [
@@ -17,10 +19,16 @@ export const questions = [
         options: ["Male", "Female"],
       },
       {
-        question: "Country and City:",
-        type: "custom",
-        name: "countryCity",
-        component: "CountriesAndCitiesSearch",
+        question: "Country:",
+        type: "custom-country",
+        name: "Country",
+        component: "CountrySearch",
+      },
+      {
+        question: "City:",
+        type: "custom-city",
+        name: "City",
+        component: "CitiesSearch",
       },
       {
         question: "Yearly income in USD:",

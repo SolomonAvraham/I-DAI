@@ -1,31 +1,45 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
-type CountriesAndCitiesSearchProps = {
+// Country Search Component
+type CountriesSearchProps = {
+  initialValue: string | null;
   onCountrySelect: (country: string) => void;
-  onCitySelect: (city: string) => void;
 };
 
-export default function CountriesAndCitiesSearch({
+export function CountriesSearch({
   onCountrySelect,
-  onCitySelect,
-}: CountriesAndCitiesSearchProps) {
+  initialValue  ,
+}: CountriesSearchProps) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<
     { countryName: string; emoji: string }[]
   >([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [citySearch, setCitySearch] = useState("");
-  const [cityResults, setCityResults] = useState<string[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(
+    initialValue  
+  );
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      if (search.trim() === "") {
-        setResults([]);
+   useEffect(() => {
+      setSelectedCountry(initialValue);
+   }, [initialValue]);
+
+  
+  
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+   // Debounced fetch countries
+  const fetchCountries = useCallback(
+    async (searchTerm: string) => {
+      // Clear error if search is different from selected country
+      if (selectedCountry !== searchTerm) {
         setError(null);
+      }
+
+      if (searchTerm.trim() === "") {
+        setResults([]);
         return;
       }
 
@@ -33,140 +47,124 @@ export default function CountriesAndCitiesSearch({
         setLoading(true);
 
         const res = await fetch(
-          `/api/countries/search?search=${encodeURIComponent(search)}`
+          `/api/countries/search?search=${encodeURIComponent(searchTerm)}`
         );
 
         const data = await res.json();
 
         if (Array.isArray(data) && data.length > 0) {
           setResults(data);
+          setIsDropdownOpen(true);
         } else {
           setResults([]);
           setError("Country not found");
+          setIsDropdownOpen(false);
         }
       } catch (error) {
         console.error("Error fetching countries:", error);
+        setError("An error occurred while fetching countries");
+        setIsDropdownOpen(false);
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [selectedCountry]
+  );
 
-    const timeoutId = setTimeout(() => {
-      fetchCountries();
-    }, 300);
-
-    return () => clearTimeout(timeoutId);
-  }, [search]);
-
+  // Handle outside click to close dropdown
   useEffect(() => {
-    const fetchCities = async () => {
-      if (!selectedCountry || citySearch.trim() === "") {
-        setCityResults([]);
-        setError(null);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `/api/countries/cities?country=${encodeURIComponent(
-            selectedCountry
-          )}&search=${encodeURIComponent(citySearch)}`
-        );
-        const data = await res.json();
-        if (data) {
-          if (!data[0]) {
-            setError("City not found");
-          } else {
-            setCityResults(data);
-          }
-        } else {
-          setCityResults([]);
-        }
-      } catch (error) {
-        console.error("Error fetching cities:", error);
-      } finally {
-        setLoading(false);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
       }
     };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Debounce search input
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
-      fetchCities();
+      if (search && search !== selectedCountry) {
+        fetchCountries(search);
+      }
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [selectedCountry, citySearch]);
+  }, [search, fetchCountries, selectedCountry]);
+
+  // Handle country selection
+  const handleCountrySelect = (country: {
+    countryName: string;
+    emoji: string;
+  }) => {
+    const countryName = country.countryName;
+    onCountrySelect(countryName);
+    setSearch(countryName);
+    setSelectedCountry(countryName);
+    setResults([]);
+    setIsDropdownOpen(false);
+    setError(null);
+  };
 
   return (
-    <div className="p-4">
-      {/* Country Input */}
-      <div>
-        <input
-          type="text"
-          value={selectedCountry || search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setSelectedCountry("");
-            setCitySearch("");
-            setCityResults([]);
-          }}
-          placeholder={"Search Country"}
-          className="border  bg-white  p-2 w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
-        />
-        {results.length > 0 && !selectedCountry && (
-          <div className="border mt-1 bg-white max-h-60 overflow-y-auto shadow-lg">
-            {results.map((country) => (
-              <div
-                key={country.countryName}
-                onClick={() => {
-                  setSelectedCountry(country.countryName);
-                  onCountrySelect(country.countryName);
-                  setSearch("");
-                  setResults([]);
-                }}
-                className="cursor-pointer font-medium p-2 hover:bg-gray-100 flex justify-between items-center"
-              >
-                {country.countryName}
-                <span className="mr-2">{country.emoji || "🌍"}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* City Input */}
-      {selectedCountry && (
-        <div className="mt-4">
-          <input
-            type="text"
-            value={citySearch}
-            onChange={(e) => setCitySearch(e.target.value)}
-            placeholder={`Search cities in ${selectedCountry}...`}
-            className="border  bg-white  text-center p-2 w-full rounded-lg placeholder-shown:text-sm placeholder-shown:text-center"
-          />
-          {cityResults.length > 0 && (
-            <div className="border mt-2 bg-white max-h-60 overflow-y-auto shadow-lg">
-              {cityResults.map((city) => (
-                <div
-                  key={city}
-                  onClick={() => {
-                    onCitySelect(city);
-                    setCitySearch(city);
-                    setCityResults([]);
-                  }}
-                  className="cursor-pointer p-2 hover:bg-gray-100"
-                >
-                  {city}
-                </div>
-              ))}
+    <div ref={searchContainerRef} className="relative w-full">
+      <input
+        type="text"
+        value={selectedCountry ?? search }
+        onChange={(e) => {
+  
+          const value = e.target.value;
+          setSearch(value);
+
+          // If input is cleared, reset everything
+          if (value === "" || value !== selectedCountry) {
+            onCountrySelect("");
+            setSelectedCountry(null);
+            setResults([]);
+            setIsDropdownOpen(false);
+            setError(null);
+          }
+        }}
+        onFocus={() => {
+          // Only show dropdown if there are results and no country is selected
+          if (results.length > 0 && !selectedCountry) {
+            setIsDropdownOpen(true);
+          }
+        }}
+        placeholder="Search Country"
+        className="border select select-bordered 
+              bg-slate-100 text-black  
+              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
+        required
+      />
+      {!selectedCountry && isDropdownOpen && results.length > 0 && (
+        <div className="absolute z-10 border mt-1 bg-white max-h-48 overflow-y-auto shadow-lg w-full rounded-lg">
+          {results.map((country) => (
+            <div
+              key={country.countryName}
+              onClick={() => handleCountrySelect(country)}
+              className="cursor-pointer font-medium p-2 hover:bg-gray-100 flex justify-between items-center"
+            >
+              {country.countryName}
+              <span className="mr-2">{country.emoji || "🌍"}</span>
             </div>
-          )}
+          ))}
         </div>
       )}
       {loading && (
         <h1 className="text-center text-xs mt-1 font-medium">Loading...</h1>
-      )}{" "}
+      )}
       {error && (
-        <h1 className="text-center text-xs mt-1 font-medium">{error}</h1>
+        <h1 className="text-center text-xs mt-1 font-medium text-red-500">
+          {error}
+        </h1>
       )}
     </div>
   );
