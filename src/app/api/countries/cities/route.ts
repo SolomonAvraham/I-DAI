@@ -1,4 +1,4 @@
-import CountriesAndCities from "@/db/models/countriesAndCities";
+import CountriesAndCities from "@/db/models/countriesAndCitiesModel";
 import connectToDatabase from "@/db";
 import { NextResponse } from "next/server";
 

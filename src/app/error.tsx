@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 
 const ErrorPage = () => {
-  const router = useRouter();
-
   return (
     <div className=" text-white relative flex justify-center items-center h-screen  text-center">
       <video
@@ -21,7 +18,7 @@ const ErrorPage = () => {
         <h1 className="text-5xl font-bold text-error">500</h1>
         <p className="text-4xl mt-4 ">Something went wrong!</p>
         <button
-          onClick={() => router.refresh()}
+          onClick={() => window.location.reload()}
           className="mt-6 btn text-white text-2xl"
         >
           Try Again

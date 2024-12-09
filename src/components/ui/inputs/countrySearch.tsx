@@ -10,7 +10,7 @@ type CountriesSearchProps = {
 
 export function CountriesSearch({
   onCountrySelect,
-  initialValue  ,
+  initialValue,
 }: CountriesSearchProps) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<
@@ -20,17 +20,17 @@ export function CountriesSearch({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(
-    initialValue  
+    initialValue
   );
 
-   useEffect(() => {
-      setSelectedCountry(initialValue);
-   }, [initialValue]);
+  useEffect(() => {
+    if (initialValue) {
+      setSearch(initialValue);
+    }
+  }, [initialValue]);
 
-  
-  
   const searchContainerRef = useRef<HTMLDivElement>(null);
-   // Debounced fetch countries
+  // Debounced fetch countries
   const fetchCountries = useCallback(
     async (searchTerm: string) => {
       // Clear error if search is different from selected country
@@ -91,7 +91,7 @@ export function CountriesSearch({
   // Debounce search input
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (search && search !== selectedCountry) {
+      if (initialValue !== search && search && search !== selectedCountry) {
         fetchCountries(search);
       }
     }, 300);
@@ -117,15 +117,14 @@ export function CountriesSearch({
     <div ref={searchContainerRef} className="relative w-full">
       <input
         type="text"
-        value={selectedCountry ?? search }
+        value={search}
         onChange={(e) => {
-  
           const value = e.target.value;
           setSearch(value);
 
-          // If input is cleared, reset everything
-          if (value === "" || value !== selectedCountry) {
-            onCountrySelect("");
+          // If input is cleared, reset states
+          if (!value || value !== selectedCountry) {
+            onCountrySelect(""); // Reset parent component's country state
             setSelectedCountry(null);
             setResults([]);
             setIsDropdownOpen(false);
@@ -133,15 +132,14 @@ export function CountriesSearch({
           }
         }}
         onFocus={() => {
-          // Only show dropdown if there are results and no country is selected
-          if (results.length > 0 && !selectedCountry) {
+          if (results.length > 0) {
             setIsDropdownOpen(true);
           }
         }}
         placeholder="Search Country"
         className="border select select-bordered 
-              bg-slate-100 text-black  
-              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
+        bg-slate-100 text-black  
+        focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
         required
       />
       {!selectedCountry && isDropdownOpen && results.length > 0 && (

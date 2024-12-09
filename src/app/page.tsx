@@ -1,6 +1,12 @@
+'use client';
+
 import HomePageButton from "@/components/ui/buttons/homePageButton";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const shouldTriggerButton = searchParams.get("trigger") === "true";
+
   return (
     <div className="bg-black text-white bg-opacity-5 relative h-screen">
       <video
@@ -29,7 +35,13 @@ export default function Home() {
             <br />
             How will you die?
           </h2>
-          <HomePageButton />
+          <HomePageButton
+            triggerButton={shouldTriggerButton}
+            onButtonTriggered={() => {
+              // Optional: Add any additional logic when button is triggered
+              console.log("Home page button triggered");
+            }}
+          />
         </div>
       </div>
     </div>

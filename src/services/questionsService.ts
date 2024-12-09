@@ -4,7 +4,6 @@ export const finalizeQuestions = async () => {
   const { responses } = useQuestionsStore.getState();
   const completeResponses = {
     ...responses,
-    cleanWater: responses.cleanWater || "No",
   };
 
   try {
@@ -22,7 +21,7 @@ export const finalizeQuestions = async () => {
     const data = await res.json();
 
     return data;
-  } catch (error) {
+  } catch (error ) {
     console.error("Error saving questions:", error);
   }
 };

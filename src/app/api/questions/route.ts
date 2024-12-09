@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/db"; // Adjust path as necessary
-import questions from "@/db/models/questions";
+import questions from "@/db/models/questionsModel";
 
 export async function POST(req: Request) {
   try {

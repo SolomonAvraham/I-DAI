@@ -1,4 +1,4 @@
-import CountriesAndCities from "@/db/models/countriesAndCities"; // Adjust path as needed
+import CountriesAndCities from "@/db/models/countriesAndCitiesModel"; // Adjust path as needed
 import connectToDatabase from "@/db";
 import { NextResponse } from "next/server";
 

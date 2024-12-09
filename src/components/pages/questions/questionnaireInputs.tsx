@@ -23,22 +23,31 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   setSelectedCountry,
   setSelectedCity,
 }) => {
+  // Shared input styles
+  const inputBaseClasses = `
+    w-full lg:w-3/4 max-w-xs 
+    bg-slate-100 text-black 
+    focus:outline-blue-500 focus:ring-2 focus:ring-blue-200
+  `;
+
   switch (question.type) {
     case "number":
       return (
         <div className="flex items-center justify-center w-full">
           <input
-            value={String(currentValue) || question.defaultValue || ""}
+            value={Number(currentValue) || question.defaultValue || ""}
             type="number"
             min={question.min}
             max={question.max}
-            onChange={(e) => handleInputChange(question.name, e.target.value)}
+            onChange={(e) =>
+              handleInputChange(question.name, Number(e.target.value))
+            }
             className={`
-              w-full lg:w-1/3 max-w-xs input input-bordered 
-              bg-slate-100 text-black text-center 
-              focus:outline-blue-500 focus:ring-2 focus:ring-blue-200
+              ${inputBaseClasses}
+              input input-bordered text-center
               ${question.name === "income" && "lg:w-6/12"}
-             `}
+              ${question.name === "age" && "lg:w-4/12"}
+            `}
             required
           />
           {question.name === "income" && (
@@ -50,13 +59,12 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
     case "select":
       return (
         <select
-          value={String(currentValue || "")}
+          value={String(currentValue || question.defaultValue || "")}
           onChange={(e) => handleInputChange(question.name, e.target.value)}
-          className="
-            w-full lg:w-3/4 max-w-xs select select-bordered 
-            bg-slate-100 text-black text-center
-            focus:outline-blue-500 focus:ring-2 focus:ring-blue-200
-          "
+          className={`
+            ${inputBaseClasses}
+            select select-bordered text-center
+          `}
           required
         >
           <option value="" disabled>
@@ -80,17 +88,19 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               className="flex items-center gap-2 cursor-pointer"
             >
               <input
-                checked={currentValue === option}
+                checked={Number(currentValue) === Number(option)}
                 type="radio"
                 name={question.name}
-                value={option}
+                value={Number(option)}
                 onChange={(e) =>
-                  handleInputChange(question.name, e.target.value)
+                  handleInputChange(question.name, Number(e.target.value))
                 }
                 className="radio radio-primary"
                 required
               />
-              <span className="text-black">{option}</span>
+              <span className="text-black">
+                {option === 0 ? "No" : option === 1 ? "Yes" : option}
+              </span>
             </label>
           ))}
         </div>

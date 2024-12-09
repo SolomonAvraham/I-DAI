@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
- 
+import { useEffect } from "react";
+
 export default function Navbar() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  const creditsLeft = localStorage.getItem("attempts");
-
-  if (status !== "authenticated") {
-    return null;
-  }
+  let creditsLeft;
+  
+  useEffect(() => {
+    creditsLeft = localStorage.getItem("attempts");
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -21,7 +22,7 @@ export default function Navbar() {
       });
 
       if (response.ok) {
-         router.push("/");
+        router.push("/");
       } else {
         console.error("Signout failed");
       }
@@ -41,7 +42,7 @@ export default function Navbar() {
       <div className="flex-none gap-4 items-center">
         {/* Credits */}
         <div className="text-sm text-left cursor-default">
-          <p className="font-semibold">Welcome, {user.name}!</p>
+          <p className="font-semibold">Welcome, {user?.name}!</p>
           <p className="text-gray-200">Credits Left: {creditsLeft ?? 1}</p>
         </div>
         {/* User Info */}
@@ -51,8 +52,8 @@ export default function Navbar() {
               <Image
                 width={40}
                 height={40}
-                src={user.image || "/avatar.png"}
-                alt={`${user.name}'s Avatar`}
+                src={user?.image || "/avatar.png"}
+                alt={`${user?.name}'s Avatar`}
               />
             </div>
           </label>

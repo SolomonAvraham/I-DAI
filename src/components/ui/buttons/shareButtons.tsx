@@ -32,7 +32,7 @@ export default function ShareButtons({
       <TwitterShareButton
         url={shareUrl}
         title={title}
-        hashtags={["HowWillYouDie"]}
+        //hashtags={["IDAI"]}
       >
         <XIcon size={48} round className="hover:scale-105" />
       </TwitterShareButton>
