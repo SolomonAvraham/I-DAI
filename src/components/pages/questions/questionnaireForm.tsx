@@ -6,9 +6,14 @@ import { QuestionInput } from "./questionnaireInputs";
 import { useQuestionnaireProgress } from "@/hooks/useQuestionnaireProgress";
 import ProgressBar from "@/components/ui/progressBar/progressBar";
 import { useRouter } from "next/navigation";
+import BMICalculator from "@/components/ui/BMICalculator/BMICalculator";
+import { PiArrowBendDownRightFill } from "react-icons/pi";
+import { useState } from "react";
 
 const QuestionnaireForm = () => {
   const router = useRouter();
+  const [openBMICalculator, setOpenBMICalculator] = useState(false);
+
   const {
     currentCategory,
     setCurrentCategory,
@@ -31,74 +36,75 @@ const QuestionnaireForm = () => {
 
   const isCurrentCategoryComplete = () => {
     const currentQuestions = questions[currentCategory].questions;
+
     return currentQuestions.every((q) => {
       const value = responses[q.name];
 
-      if (q.type === "custom-country") {
-        return selectedCountry !== null;
-      }
+      // Special handling for different input types
+      switch (q.type) {
+        case "number":
+          // For number inputs, check if value is not undefined, null, or empty string
+          return value !== undefined && value !== null && value !== "";
 
-      if (q.type === "custom-city") {
-        return selectedCity !== null;
-      }
+        case "select":
+          // For select inputs, ensure a value is selected
+          return value !== undefined && value !== null && value !== "";
 
-      if (q.type === "number") {
-        return value !== undefined && value !== null && value !== "";
-      }
+        case "radio":
+          // For radio inputs, the value should be explicitly 0 or 1
+          return value === 0 || value === 1;
 
-      if (q.type === "select" || q.type === "radio") {
-        return value !== undefined && value !== null && value !== "";
-      }
+        case "custom-country":
+          return selectedCountry !== null && selectedCountry !== "";
 
-      return false;
+        case "custom-city":
+          return selectedCity !== null && selectedCity !== "";
+
+        default:
+          return false;
+      }
     });
   };
 
   const handleNextCategory = () => {
-    if (isCurrentCategoryComplete()) {
-      if (currentCategory < questions.length - 1) {
+    // Check if this is the last category
+    const isLastCategory = currentCategory === questions.length - 1;
+
+    // If not the last category, proceed with validation
+    if (!isLastCategory) {
+      if (isCurrentCategoryComplete()) {
         const nextCategory = currentCategory + 1;
         setCurrentCategory(nextCategory);
         saveProgress();
+      } else {
+        alert("Please complete all questions in the current category");
       }
-    } else {
-      alert("Please complete all questions in the current category");
     }
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const currentQuestions = questions[currentCategory].questions;
 
-    const allQuestionsComplete = currentQuestions.every((q) => {
+    // Validate the last category specifically
+    const lastCategoryQuestions = questions[questions.length - 1].questions;
+    const isLastCategoryComplete = lastCategoryQuestions.every((q) => {
       const value = responses[q.name];
 
-      if (q.type === "custom-country") {
-        return selectedCountry !== null;
+      switch (q.type) {
+        case "number":
+          return value !== undefined && value !== null && value !== "";
+        case "select":
+          return value !== undefined && value !== null && value !== "";
+        case "radio":
+          return value === 0 || value === 1;
+        default:
+          return false;
       }
-
-      if (q.type === "custom-city") {
-        return selectedCity !== null;
-      }
-
-      if (q.type === "number") {
-        return value !== undefined && value !== null && value !== "";
-      }
-
-      if (q.type === "select" || q.type === "radio") {
-        return value !== undefined && value !== null && value !== "";
-      }
-
-      return false;
     });
 
-    if (allQuestionsComplete) {
+    if (isLastCategoryComplete) {
       finalizeQuestions();
       localStorage.removeItem("questionnaireProgress");
-      //alert("Questionnaire submitted successfully!");
       router.push("/user/result");
-    } else {
-      alert("Please complete all questions in the final category");
     }
   };
 
@@ -112,9 +118,10 @@ const QuestionnaireForm = () => {
       items-center  
       px-4 
       py-8
-      lg:h-[55rem]
+      lg:h-[60rem]
       text-center
       lg:text-left
+      relative
     "
     >
       <div
@@ -211,7 +218,11 @@ const QuestionnaireForm = () => {
                     </p>
                   )}
                 </label>
-                <div className="w-full flex justify-center items-center">
+                <div
+                  className={`w-full flex justify-center items-center ${
+                    question.name === "bmi" && "flex-col gap-5"
+                  }`}
+                >
                   <QuestionInput
                     question={question}
                     currentValue={responses[question.name]}
@@ -220,8 +231,29 @@ const QuestionnaireForm = () => {
                     handleInputChange={handleInputChange}
                     setSelectedCountry={setSelectedCountry}
                     setSelectedCity={setSelectedCity}
-                  />
+                  />{" "}
+                  {question.name === "bmi" && (
+                    <div className="flex gap-3 items-end">
+                      <span className="text-5xl text-gray-600 ">
+                        <PiArrowBendDownRightFill />
+                      </span>{" "}
+                      <button
+                        type="button"
+                        className="text-xs text-black  border hover:shadow font-semibold hover:bg-gray-300  bg-slate-200 p-2 rounded-xl"
+                        onClick={() => setOpenBMICalculator(true)}
+                      >
+                        BMI Calculator
+                      </button>
+                    </div>
+                  )}
                 </div>
+
+                {openBMICalculator && question.name === "bmi" && (
+                  <BMICalculator
+                    setOpenBMICalculator={setOpenBMICalculator}
+                    onBMIChange={(bmi) => handleInputChange("bmi", bmi)}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -282,6 +314,7 @@ const QuestionnaireForm = () => {
                   lg:text-2xl
                   text-white
                 "
+                disabled={!isCurrentCategoryComplete()}
               >
                 Submit
               </button>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/sessionProvider/sessionProvider";
+import FloatingBubble from "@/components/ui/floatingBubble/floatingBubble";
 
 const imageUrl =
   "https://images.pexels.com/photos/1270184/pexels-photo-1270184.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -85,8 +86,9 @@ export default async function RootLayout({
         <meta property="og:url" content="https://i-dai.com" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className="min-h-screen ">
+      <body className="min-h-screen  ">
         <SessionProvider session={session}>{children}</SessionProvider>
+        <FloatingBubble />
       </body>
     </html>
   );

@@ -3,7 +3,6 @@
 import TermsPopup from "@/components/ui/popups/termsPopup";
 import React, { useEffect, useState } from "react";
 
-
 interface HomePageButtonProps {
   triggerButton?: boolean;
   onButtonTriggered?: () => void;
@@ -17,16 +16,16 @@ export default function HomePageButton({
 
   const [showPopup, setShowPopup] = useState(false);
 
- const handleClick = () => {
-   setShowPopup(true);
-   onButtonTriggered?.();
- };
+  const handleClick = () => {
+    setShowPopup(true);
+    onButtonTriggered?.();
+  };
 
- useEffect(() => {
-   if (triggerButton) {
-     handleClick();
-   }
- }, [triggerButton]);
+  useEffect(() => {
+    if (triggerButton) {
+      handleClick();
+    }
+  }, [triggerButton]);
   return (
     <>
       <button

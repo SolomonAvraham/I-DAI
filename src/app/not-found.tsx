@@ -14,8 +14,8 @@ const NotFoundPage = () => {
         <source src="/video/skull.mp4" type="video/mp4" />
       </video>{" "}
       <div>
-        <h1 className="text-6xl font-bold ">404</h1>
-        <h1 className="text-3xl md:text-7xl font-bold ">Page Not Found</h1>
+        <h1 className="text-6xl md:text-9xl font-bold ">404</h1>
+        <h1 className="text-3xl md:text-6xl font-bold ">Page Not Found</h1>
         <p className="text-lg md:text-xl mt-4">
           Oops! The page you are looking for doesn&#39;t exist.
         </p>

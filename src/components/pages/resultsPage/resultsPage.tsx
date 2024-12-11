@@ -4,10 +4,23 @@ import { useRouter } from "next/navigation";
 import ShareButtons from "@/components/ui/buttons/shareButtons";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const ResultsPage: React.FC = () => {
   const router = useRouter();
   const { data } = useSession();
+  const [alertShown, setAlertShown] = useState(false);
+
+  useEffect(() => {
+    if (!data && !alertShown) {
+      setAlertShown(true);
+      setTimeout(() => {
+        alert(
+          "Just a heads-up! This page is like a shooting star—one-time only. Feel free to share it as much as you like, but once you leave, poof! It’s gone forever (that’s the guest life). So, don’t let it slip away!"
+        );
+      }, 2500);
+    }
+  }, [data, alertShown]);
 
   const imageURL =
     "https://images.pexels.com/photos/3992945/pexels-photo-3992945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -20,14 +33,19 @@ const ResultsPage: React.FC = () => {
     <div className="min-h-screen text-gray-700 bg-gray-100 flex flex-col items-center justify-center p-4">
       <div className="bg-white shadow-xl rounded-lg p-8 max-w-2xl lg:w-[45rem] w-full ">
         <div className="text-center py-5 mb-1">
-          <h3 className="text-3xl text-left md:text-4xl font-bold ">
+          {/* <h3 className="text-3xl text-left md:text-4xl font-bold ">
             Hey <span className="text-red-700">{data?.user?.name}</span>,
           </h3>
-          <hr className="border-t w-full md:w-1/2" />
-          <h1 className="text-2xl md:text-5xl py-2  font-bold ">
-            You Might Die From:
-          </h1>{" "}
-          <p className="text-4xl md:text-6xl text-red-700 font-bold tracking-wider mt-3">COVID-19</p>
+           */}
+          <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
+            No one knows when, But we know how{" "}
+            <span className="text-red-700 ">{data?.user?.name ?? "Guest"}</span>{" "}
+            Will leave the world because of:
+          </h1>
+          <hr className="border-t w-full md:w-1/2 mx-auto" />
+          <p className="text-4xl md:text-6xl text-red-700 font-bold tracking-wider mt-3">
+            COVID-19
+          </p>
         </div>
         <Image
           src={imageURL}
@@ -37,10 +55,10 @@ const ResultsPage: React.FC = () => {
           className="w-full h-auto rounded-lg"
         />
         <div className="mb-6 text-center mt-10">
-          <h2 className="text-xl lg:text-2xl font-semibold">
+          {/* <h2 className="text-xl lg:text-2xl font-semibold">
             Share Your Results
           </h2>
-          <hr className="border-t mt-3 w-1/2 mx-auto" />
+          <hr className="border-t mt-3 w-1/2 mx-auto" /> */}
 
           <ShareButtons
             shareUrl={shareUrl}
@@ -49,7 +67,7 @@ const ResultsPage: React.FC = () => {
             image={imageURL}
           />
         </div>
-        <div className="flex justify-center space-x-4">
+        {/* <div className="flex justify-center space-x-4">
           <button
             onClick={() => router.push("/user/questions")}
             className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
@@ -62,7 +80,11 @@ const ResultsPage: React.FC = () => {
           >
             View Dashboard
           </button>
-        </div>
+        </div> */}
+        <hr className="border-t py-3 w-1/2 mx-auto" />{" "}
+        <h2 className="text-xl lg:text-2xl font-semibold text-center">
+          Thanks for sharing your data with the world
+        </h2>
       </div>
     </div>
   );

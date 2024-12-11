@@ -25,7 +25,7 @@ export interface IQuestions extends Document {
 
   // Lifestyle and Habits
   smoke: number;
-  alcohol: 1 | 2 | 3 | 4 | 5;
+  alcohol: 0 | 1 | 2 | 3 | 4 | 5;
   physicalActivity: 1 | 2 | 3 | 4 | 5;
   stressLevel: 1 | 2 | 3 | 4 | 5;
 
@@ -108,7 +108,7 @@ const questionsSchema: Schema = new Schema(
 
     // Lifestyle and Habits
     smoke: { type: Number, required: true },
-    alcohol: { type: Number, min: 1, max: 5, required: true },
+    alcohol: { type: Number, min: 0, max: 5, required: true },
     physicalActivity: { type: Number, min: 1, max: 5, required: true },
     stressLevel: { type: Number, min: 1, max: 5, required: true },
 

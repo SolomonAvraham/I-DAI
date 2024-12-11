@@ -45,7 +45,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             className={`
               ${inputBaseClasses}
               input input-bordered text-center
-              ${question.name === "income" && "lg:w-6/12"}
+              ${
+                question.name === "income" ||
+                (question.name === "trafficViolations" && "lg:w-6/12")
+              }
               ${question.name === "age" && "lg:w-4/12"}
             `}
             required
@@ -73,7 +76,8 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           {question.options?.map((option: string | number) => (
             <option key={option} value={option}>
               {option}
-              {option === 10 && "+"}
+              {option === 10 && question.name === "children" && "+"}
+              {option === 12 && question.name === "sleepHours" && "+"}
             </option>
           ))}
         </select>
@@ -96,13 +100,12 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                   handleInputChange(question.name, Number(e.target.value))
                 }
                 className="radio radio-primary"
-                required
               />
               <span className="text-black">
                 {option === 0 ? "No" : option === 1 ? "Yes" : option}
               </span>
             </label>
-          ))}
+          ))}{" "}
         </div>
       );
 

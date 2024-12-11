@@ -1,4 +1,3 @@
-'use client';
 import { useMemo } from "react";
 
 const ProgressBar = ({
@@ -9,7 +8,14 @@ const ProgressBar = ({
   totalCategories: number;
 }) => {
   const progressPercentage = useMemo(() => {
-    return Math.round((currentCategory / (totalCategories - 1)) * 100);
+    // If it's the first category, return 0
+    if (currentCategory === 0) return 0;
+
+    // If it's the last category, return 95 to stay close to but not exactly 100
+    if (currentCategory === totalCategories - 1) return 95;
+
+    // For categories in between, calculate proportional progress
+    return Math.round((currentCategory / (totalCategories - 1)) * 95);
   }, [currentCategory, totalCategories]);
 
   return (
@@ -24,7 +30,7 @@ const ProgressBar = ({
         ></div>
       </div>
       <div className="flex items-center">
-        <span className="text-blue-800 lg:text-2xl font-bold  lg:ml-4">
+        <span className="text-blue-800 lg:text-2xl font-bold lg:ml-4">
           {progressPercentage}%
         </span>
       </div>

@@ -7,7 +7,7 @@ export const useQuestionnaireProgress = () => {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-
+ 
   useEffect(() => {
     const savedProgress = localStorage.getItem("questionnaireProgress");
     if (savedProgress) {
@@ -51,6 +51,6 @@ export const useQuestionnaireProgress = () => {
     setSelectedCity,
     responses,
     updateResponse,
-    saveProgress,
+    saveProgress, 
   };
 };
