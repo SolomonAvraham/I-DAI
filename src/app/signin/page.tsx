@@ -1,4 +1,4 @@
- import SignIn from "@/components/pages/siginin/signin";
+import SignIn from "@/components/pages/siginin/signin";
 import { getProviders } from "next-auth/react";
 
 export default async function SignInPage() {

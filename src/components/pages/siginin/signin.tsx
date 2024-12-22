@@ -1,28 +1,14 @@
- "use client";
+"use client";
 
-import CountdownTimer from "@/components/ui/counter/counter";
-import { signIn, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import GuestButton from "@/components/features/buttons/guestButton";
+import CountdownTimer from "@/components/features/counter/counter";
+import { ClientSafeProvider, signIn,  } from "next-auth/react";
 
 interface SignInProps {
-  providers: Record<string, any> | null;
+  providers: Record<string, ClientSafeProvider> | null;
 }
 
 const SignIn: React.FC<SignInProps> = ({ providers }) => {
-  const router = useRouter();
-
-  const handleGuest = async () => {
-    try {
-      await signOut({ redirect: false });
-
-      localStorage.removeItem("questionnaireProgress");
-      router.refresh();
-      router.push("/user/questions");
-    } catch (error) {
-      console.error("Error entering as guest:", error);
-    }
-  };
-
   if (!providers) {
     return <div>No providers available</div>;
   }
@@ -37,10 +23,15 @@ const SignIn: React.FC<SignInProps> = ({ providers }) => {
       </h1>
 
       <div className="flex flex-col items-center justify-center py-7">
-        {Object.values(providers).map((provider: any) => (
+        {Object.values(providers).map((provider) => (
           <button
             key={provider.name}
-            onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+            onClick={() => {
+              localStorage.removeItem("questionnaireProgress");
+              localStorage.removeItem("userId");
+              localStorage.removeItem("name");
+              signIn(provider.id, { callbackUrl: "/user/questions" });
+            }}
             className="flex items-center  justify-center gap-2 mb-4 px-6 py-3 md:px-12 md:py-8 md:text-2xl border border-gray-300 bg-white text-gray-600 rounded-2xl hover:bg-gray-100 shadow-md"
           >
             <img
@@ -51,12 +42,7 @@ const SignIn: React.FC<SignInProps> = ({ providers }) => {
             Sign in with {provider.name}
           </button>
         ))}
-        <button
-          onClick={handleGuest}
-          className="flex items-center  justify-center gap-2 mb-4 px-6 py-3 md:px-12 md:py-8 md:text-2xl border border-gray-300 bg-white text-gray-600 rounded-2xl hover:bg-gray-100 shadow-md"
-        >
-          Enter as a guest{" "}
-        </button>
+        <GuestButton />
       </div>
       <CountdownTimer />
     </div>

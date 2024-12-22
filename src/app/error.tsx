@@ -1,18 +1,11 @@
 "use client";
+import VideoBackground from "@/components/layouts/nav/videoBackground";
 import React from "react";
 
-const ErrorPage = () => {
-  return (
+const ErrorPage = () => { 
+   return (
     <div className=" text-white relative flex justify-center items-center h-screen  text-center">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute -z-10 top-0 bottom-0 right-0 left-0 w-full h-full object-cover opacity-95"
-      >
-        <source src="/video/skull.mp4" type="video/mp4" />
-      </video>{" "}
+     <VideoBackground/>
       <div>
         <h1 className="text-8xl font-bold text-warning ">ERROR</h1>
         <h1 className="text-5xl font-bold text-error">500</h1>

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
-import SessionProvider from "@/components/sessionProvider/sessionProvider";
-import FloatingBubble from "@/components/ui/floatingBubble/floatingBubble";
+import SessionProvider from "@/components/providers/sessionProvider/sessionProvider";
+import FloatingBubble from "@/components/features/floatingBubble/floatingBubble";
+import QueryProvider from "@/components/providers/queryProvider/queryProvider";
 
 const imageUrl =
   "https://images.pexels.com/photos/1270184/pexels-photo-1270184.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -87,7 +88,9 @@ export default async function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="min-h-screen  ">
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <QueryProvider>{children}</QueryProvider>
+        </SessionProvider>
         <FloatingBubble />
       </body>
     </html>

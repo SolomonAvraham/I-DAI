@@ -18,11 +18,11 @@ export async function GET(req: Request) {
       { countryName: { $regex: regexSearch } },
       { countryName: 1, emoji: 1, _id: 0 }
     ).sort({ countryName: 1 });
-
+    
     if (!results.length) {
       return NextResponse.json([], { status: 404 });
     }
-
+ 
     return NextResponse.json(results, { status: 200 });
   } catch (error) {
     console.error("🚀 ~ Database error:", error);

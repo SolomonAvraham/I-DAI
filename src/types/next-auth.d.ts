@@ -1,8 +1,9 @@
 import { DefaultSession, DefaultUser } from "next-auth";
-import { Connection } from "mongoose";  
+import type { Connection, Types } from "mongoose";
+ 
 declare module "next-auth" {
   interface User extends DefaultUser {
-    id: string;  
+    id: string;
   }
 
   interface Session extends DefaultSession {
@@ -23,6 +24,7 @@ declare module "next-auth/jwt" {
 
 declare global {
   let mongoose: {
+    Types: Types;
     conn: Connection | null;
     promise: Promise<Connection> | null;
   };

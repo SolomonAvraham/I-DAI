@@ -13,10 +13,11 @@ export default {
         foreground: "var(--foreground)",
       },
       screens: {
-        'xl': '1440px',
-        '2xl': '1920px',
-      }
+        xs: "320px",
+        xl: "1440px",
+        "2xl": "1920px",
+      },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui") ],
 } satisfies Config;

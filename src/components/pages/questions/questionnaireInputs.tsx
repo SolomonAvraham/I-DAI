@@ -1,7 +1,7 @@
 import React from "react";
 import { Question } from "@/types/types";
-import { CountriesSearch } from "@/components/ui/inputs/countrySearch";
-import { CitiesSearch } from "@/components/ui/inputs/citiesSearch";
+import { CountriesSearch } from "@/components/features/inputs/countrySearch";
+import { CitiesSearch } from "@/components/features/inputs/citiesSearch";
 import { QuestionsValue } from "@/store/questionsStore";
 
 interface QuestionInputProps {
@@ -35,7 +35,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
       return (
         <div className="flex items-center justify-center w-full">
           <input
-            value={Number(currentValue) || question.defaultValue || ""}
+            value={Number(currentValue) || ""}
             type="number"
             min={question.min}
             max={question.max}
@@ -49,7 +49,8 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 question.name === "income" ||
                 (question.name === "trafficViolations" && "lg:w-6/12")
               }
-              ${question.name === "age" && "lg:w-4/12"}
+              ${question.name === "age" && "w-4/12 lg:w-4/12"}
+              ${question.name === "bmi" && "w-4/12 lg:w-4/12"}
             `}
             required
           />
@@ -62,8 +63,13 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
     case "select":
       return (
         <select
-          value={String(currentValue || question.defaultValue || "")}
-          onChange={(e) => handleInputChange(question.name, e.target.value)}
+          value={String(currentValue || "")}
+          onChange={(e) => {
+            const rawValue = e.target.value;
+            const typedValue =
+              question.dataType === "number" ? Number(rawValue) : rawValue;
+            handleInputChange(question.name, typedValue); // Pass the converted value
+          }}
           className={`
             ${inputBaseClasses}
             select select-bordered text-center

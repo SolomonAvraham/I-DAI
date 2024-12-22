@@ -1,23 +1,26 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { questionsSchema, IQuestions as IQuestion } from "./questionsModel"; // Ensure this is exported correctly
 
- export interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
+  image: string;
+  formSubmitted: boolean;
   email: string;
-  questions?: mongoose.Types.ObjectId[];  
+  questions: IQuestion[];
 }
 
- const userSchema: Schema = new Schema(
-   {
-      email: { type: String, required: true, unique: true, lowercase: true },
-      questions: [
-       { type: Schema.Types.ObjectId, ref: "questions" },
-     ],
-   },
-   { timestamps: true }
- );
-///results, payments-packages// 
- userSchema.index({ email: 1 });
+const userSchema: Schema = new Schema(
+  {
+    name: { type: String, required: false },
+    image: { type: String, required: false },
+    formSubmitted: { type: Boolean, default: false, required: true },
+    email: { type: String, required: false },
+    questions: { type: [questionsSchema], required: false },
+  },
+  { timestamps: true }
+);
 
-const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const UserModel =
+  mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
-export default User;
+export default UserModel;

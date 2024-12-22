@@ -1,18 +1,35 @@
 "use client";
 
-import { finalizeQuestions } from "@/services/questionsService";
 import { questions } from "@/utils/questionsData";
 import { QuestionInput } from "./questionnaireInputs";
 import { useQuestionnaireProgress } from "@/hooks/useQuestionnaireProgress";
-import ProgressBar from "@/components/ui/progressBar/progressBar";
-import { useRouter } from "next/navigation";
-import BMICalculator from "@/components/ui/BMICalculator/BMICalculator";
+import ProgressBar from "@/components/features/progressBar/progressBar";
+import BMICalculator from "@/components/features/BMICalculator/BMICalculator";
 import { PiArrowBendDownRightFill } from "react-icons/pi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UseSendQuestionsMutation } from "@/lib/queries";
+import Loading from "@/components/features/loading/loading";
 
-const QuestionnaireForm = () => {
-  const router = useRouter();
+const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
+  const sendQuestionsMutation = UseSendQuestionsMutation();
+
+  useEffect(() => {
+    if (id) {
+      localStorage.setItem("userId", id);
+      localStorage.setItem("name", name);
+    }
+  }, [id]);
+
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+
+  const userName =
+    typeof window !== "undefined"
+      ? localStorage.getItem("name")
+        ? localStorage.getItem("name")
+        : "Guest"
+      : null;
 
   const {
     currentCategory,
@@ -81,10 +98,9 @@ const QuestionnaireForm = () => {
       }
     }
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validate the last category specifically
     const lastCategoryQuestions = questions[questions.length - 1].questions;
     const isLastCategoryComplete = lastCategoryQuestions.every((q) => {
       const value = responses[q.name];
@@ -102,9 +118,7 @@ const QuestionnaireForm = () => {
     });
 
     if (isLastCategoryComplete) {
-      finalizeQuestions();
-      localStorage.removeItem("questionnaireProgress");
-      router.push("/user/result");
+      await sendQuestionsMutation.mutateAsync({ userId, userName });
     }
   };
 
@@ -124,8 +138,11 @@ const QuestionnaireForm = () => {
       relative
     "
     >
-      <div
-        className="
+      {sendQuestionsMutation.isPending ? (
+        <Loading />
+      ) : (
+        <div
+          className="
         w-full 
         lg:w-[50rem]
         xl:w-[70rem]
@@ -139,9 +156,9 @@ const QuestionnaireForm = () => {
         justify-between
         items-center
       "
-      >
-        <div
-          className="
+        >
+          <div
+            className="
           w-full 
           rounded-l-2xl 
           p-6 
@@ -151,9 +168,9 @@ const QuestionnaireForm = () => {
           justify-center
           h-[15%]
         "
-        >
-          <h2
-            className="
+          >
+            <h2
+              className="
             text-2xl 
             md:text-6xl 
             xl:text-7xl 
@@ -164,19 +181,19 @@ const QuestionnaireForm = () => {
             mt-10
             tracking-wide
           "
-          >
-            {questions[currentCategory].category}
-          </h2>
-          <hr className="border-t w-full mx-auto border-gray-200 mb-2" />
-          <ProgressBar
-            currentCategory={currentCategory}
-            totalCategories={questions.length}
-          />
-        </div>
+            >
+              {questions[currentCategory].category}
+            </h2>
+            <hr className="border-t w-full mx-auto border-gray-200 mb-2" />
+            <ProgressBar
+              currentCategory={currentCategory}
+              totalCategories={questions.length}
+            />
+          </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="
+          <form
+            onSubmit={handleSubmit}
+            className="
           w-full 
           px-6
           flex
@@ -186,12 +203,12 @@ const QuestionnaireForm = () => {
           flex-grow
           h-[70%]
         "
-        >
-          <div className="w-full max-w-lg space-y-6 flex flex-col justify-center flex-grow">
-            {questions[currentCategory].questions.map((question) => (
-              <div
-                key={question.name}
-                className="
+          >
+            <div className="w-full max-w-lg space-y-6 flex flex-col justify-center flex-grow">
+              {questions[currentCategory].questions.map((question) => (
+                <div
+                  key={question.name}
+                  className="
                   flex 
                   flex-col
                   lg:flex-row 
@@ -199,9 +216,9 @@ const QuestionnaireForm = () => {
                   justify-center
                   items-center  
                 "
-              >
-                <label
-                  className="
+                >
+                  <label
+                    className="
                   text-base 
                   font-medium 
                   text-black 
@@ -210,56 +227,56 @@ const QuestionnaireForm = () => {
                   items-center
                   justify-center
                 "
-                >
-                  {question.question}
-                  {question.description && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      {question.description}
-                    </p>
-                  )}
-                </label>
-                <div
-                  className={`w-full flex justify-center items-center ${
-                    question.name === "bmi" && "flex-col gap-5"
-                  }`}
-                >
-                  <QuestionInput
-                    question={question}
-                    currentValue={responses[question.name]}
-                    selectedCountry={selectedCountry}
-                    selectedCity={selectedCity}
-                    handleInputChange={handleInputChange}
-                    setSelectedCountry={setSelectedCountry}
-                    setSelectedCity={setSelectedCity}
-                  />{" "}
-                  {question.name === "bmi" && (
-                    <div className="flex gap-3 items-end">
-                      <span className="text-5xl text-gray-600 ">
-                        <PiArrowBendDownRightFill />
-                      </span>{" "}
-                      <button
-                        type="button"
-                        className="text-xs text-black  border hover:shadow font-semibold hover:bg-gray-300  bg-slate-200 p-2 rounded-xl"
-                        onClick={() => setOpenBMICalculator(true)}
-                      >
-                        BMI Calculator
-                      </button>
-                    </div>
+                  >
+                    {question.question}
+                    {question.description && (
+                      <p className="text-xs text-gray-600 mt-1">
+                        {question.description}
+                      </p>
+                    )}
+                  </label>
+                  <div
+                    className={`w-full flex justify-center items-center ${
+                      question.name === "bmi" && "flex-col gap-5"
+                    }`}
+                  >
+                    <QuestionInput
+                      question={question}
+                      currentValue={responses[question.name]}
+                      selectedCountry={selectedCountry}
+                      selectedCity={selectedCity}
+                      handleInputChange={handleInputChange}
+                      setSelectedCountry={setSelectedCountry}
+                      setSelectedCity={setSelectedCity}
+                    />{" "}
+                    {question.name === "bmi" && (
+                      <div className="flex gap-3 items-end">
+                        <span className="text-5xl text-gray-600 ">
+                          <PiArrowBendDownRightFill />
+                        </span>{" "}
+                        <button
+                          type="button"
+                          className="text-xs text-black  border hover:shadow font-semibold hover:bg-gray-300  bg-slate-200 p-2 rounded-xl"
+                          onClick={() => setOpenBMICalculator(true)}
+                        >
+                          BMI Calculator
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {openBMICalculator && question.name === "bmi" && (
+                    <BMICalculator
+                      setOpenBMICalculator={setOpenBMICalculator}
+                      onBMIChange={(bmi) => handleInputChange("bmi", bmi)}
+                    />
                   )}
                 </div>
+              ))}
+            </div>
 
-                {openBMICalculator && question.name === "bmi" && (
-                  <BMICalculator
-                    setOpenBMICalculator={setOpenBMICalculator}
-                    onBMIChange={(bmi) => handleInputChange("bmi", bmi)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div
-            className="
+            <div
+              className="
             w-full
             flex
             lg:gap-3
@@ -270,11 +287,11 @@ const QuestionnaireForm = () => {
             justify-center
             gap-6
           "
-          >
-            {currentCategory > 0 && (
-              <button
-                type="button"
-                className="
+            >
+              {currentCategory > 0 && (
+                <button
+                  type="button"
+                  className="
                   btn btn-primary 
                   w-1/3
                   lg:w-1/5
@@ -283,15 +300,15 @@ const QuestionnaireForm = () => {
                   text-white
                   px-12
                 "
-                onClick={() => setCurrentCategory((prev) => prev - 1)}
-              >
-                Previous
-              </button>
-            )}
-            {currentCategory < questions.length - 1 ? (
-              <button
-                type="button"
-                className="
+                  onClick={() => setCurrentCategory((prev) => prev - 1)}
+                >
+                  Previous
+                </button>
+              )}
+              {currentCategory < questions.length - 1 ? (
+                <button
+                  type="button"
+                  className="
                   btn btn-primary 
                   w-1/3
                   lg:w-1/5
@@ -299,14 +316,14 @@ const QuestionnaireForm = () => {
                   lg:text-2xl
                   text-white
                 "
-                onClick={handleNextCategory}
-              >
-                Next
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="
+                  onClick={handleNextCategory}
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="
                   btn btn-success 
                   w-1/3
                   lg:w-1/5
@@ -314,14 +331,15 @@ const QuestionnaireForm = () => {
                   lg:text-2xl
                   text-white
                 "
-                disabled={!isCurrentCategoryComplete()}
-              >
-                Submit
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
+                  disabled={!isCurrentCategoryComplete()}
+                >
+                  Submit
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

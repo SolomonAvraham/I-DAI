@@ -16,6 +16,7 @@ export const questions: Category[] = [
         type: "select",
         name: "gender",
         options: ["Male", "Female"],
+        dataType: "string",
       },
       {
         question: "Country:",
@@ -34,34 +35,28 @@ export const questions: Category[] = [
         type: "number",
         name: "income",
         min: 0,
-        max: 1000000,
-        defaultValue: 0,
       },
       {
         question: "BMI (Body Mass Index):",
-        type: "select",
+        type: "number",
         name: "bmi",
-        options: [
-          "Below-18.5",
-          "18.5-24.9",
-          "25.0-29.9",
-          "30.0-34.9",
-          "35.0-39.9",
-          "Above-40",
-        ],
+        min: 0,
+        max: 100,
       },
       {
         question: "Marital status:",
         type: "select",
         name: "maritalStatus",
         options: ["Married", "Single", "Divorced", "Widowed"],
+        dataType: "string",
       },
       {
         question: "Number of children:",
         type: "select",
         name: "children",
         options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        defaultValue: 0,
+
+        dataType: "number",
       },
     ],
   },
@@ -83,14 +78,14 @@ export const questions: Category[] = [
       {
         question: "Do you have a family history of mental illness?",
         type: "radio",
-        name: "mentalIllness",
+        name: "chronicIllnesses",
         options: [0, 1],
       },
       {
         question:
           "Are there other chronic illnesses in your family (e.g., ALS, multiple sclerosis)?",
         type: "radio",
-        name: "chronicIllnesses",
+        name: "chronicIllnesses_1",
         options: [0, 1],
       },
     ],
@@ -111,6 +106,7 @@ export const questions: Category[] = [
         description:
           "0 not drinking at all, 1 is the lowest, and 5 is the highest.",
         options: [0, 1, 2, 3, 4, 5],
+        dataType: "number",
       },
       {
         question: "Physical activity (1-5):",
@@ -118,13 +114,15 @@ export const questions: Category[] = [
         name: "physicalActivity",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
       {
         question: "Daily stress level (NOT at work)(1-5):",
         type: "select",
-        name: "stressLevel",
+        name: "stressLeve",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
     ],
   },
@@ -163,6 +161,7 @@ export const questions: Category[] = [
         name: "lonelinessLevel",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
       {
         question:
@@ -171,6 +170,7 @@ export const questions: Category[] = [
         type: "select",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
     ],
   },
@@ -195,7 +195,7 @@ export const questions: Category[] = [
         name: "trafficViolations",
         min: 0,
         max: 100,
-        defaultValue: 0,
+      
       },
       {
         question: "Have you had accidents in the past as a driver?",
@@ -277,6 +277,7 @@ export const questions: Category[] = [
         name: "healthcareAccess",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
     ],
   },
@@ -294,12 +295,14 @@ export const questions: Category[] = [
         type: "select",
         name: "sleepHours",
         options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        dataType: "number",
       },
       {
         question: "Main dietary sources:",
         type: "select",
         name: "dietarySources",
         options: ["Vegan", "Vegetarian", "Meat-based", "Normal-Undefined"],
+        dataType: "string",
       },
     ],
   },
@@ -311,6 +314,7 @@ export const questions: Category[] = [
         type: "select",
         name: "jobType",
         options: ["Physical", "Sedentary", "Risky"],
+        dataType: "string",
       },
       {
         question: "Work stress level (1-5):",
@@ -318,6 +322,7 @@ export const questions: Category[] = [
         name: "workStress",
         options: [1, 2, 3, 4, 5],
         description: "1 is the lowest, and 5 is the highest.",
+        dataType: "number",
       },
       {
         question: "Do you have access to social support at work?",
@@ -334,7 +339,7 @@ export const questions: Category[] = [
         question:
           "Do you engage in risky leisure activities (e.g., extreme sports)?",
         type: "radio",
-        name: "riskyLeisure",
+        name: "riskyLeisur",
         options: [0, 1],
       },
       {

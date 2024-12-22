@@ -1,27 +1,30 @@
 import useQuestionsStore from "@/store/questionsStore";
+import axios from "axios";
 
-export const finalizeQuestions = async () => {
+export type QuestionResponse = {
+  result?: string;
+  id?: string;
+};
+
+export async function sendQuestions({
+  userId,
+  userName,
+}: {
+  userId: string | null;
+  userName: string | null;
+}): Promise<QuestionResponse> {
   const { responses } = useQuestionsStore.getState();
+  const causeofdeath = "";
+
   const completeResponses = {
     ...responses,
+    causeofdeath,
   };
 
-  try {
-    const res = await fetch("/api/questions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(completeResponses),
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error.error || "Failed to save questions response");
-    }
-
-    const data = await res.json();
-
-    return data;
-  } catch (error ) {
-    console.error("Error saving questions:", error);
-  }
-};
+  const res = await axios.post<Promise<QuestionResponse>>(`/api/questions/`, {
+    completeResponses,
+    userId,
+    userName,
+  });
+  return res.data;
+}

@@ -1,86 +1,86 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import ShareButtons from "@/components/ui/buttons/shareButtons";
+import ShareButtons from "@/components/features/buttons/shareButtons";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const ResultsPage: React.FC = () => {
-  const router = useRouter();
+type ResultsPageProps = {
+  name: string;
+  result: string;
+  image: string;
+};
+
+const ResultsPage = (userResult: ResultsPageProps, id: string) => {
+  const { name, result, image } = userResult;
   const { data } = useSession();
-  const [alertShown, setAlertShown] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!data && !alertShown) {
-      setAlertShown(true);
+    if (!data) {
       setTimeout(() => {
-        alert(
-          "Just a heads-up! This page is like a shooting star—one-time only. Feel free to share it as much as you like, but once you leave, poof! It’s gone forever (that’s the guest life). So, don’t let it slip away!"
-        );
-      }, 2500);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 3000);
+      }, 2300);
     }
-  }, [data, alertShown]);
+  }, [data]);
 
-  const imageURL =
-    "https://images.pexels.com/photos/3992945/pexels-photo-3992945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
-
-  const shareUrl = "https://i-dai.com/result";
+  const shareUrl = `https://i-dai.com/results/${id}`;
   const shareTitle = "I Discovered My Life Expectancy Risk Factors";
-  const shareDescription = `I took the How Will You Die assessment and learned about my potential health risks. Check it out!`;
+  const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
 
   return (
     <div className="min-h-screen text-gray-700 bg-gray-100 flex flex-col items-center justify-center p-4">
+      {showModal && (
+        <div className="modal modal-open" onClick={() => setShowModal(false)}>
+          <div
+            className="modal-box cursor-pointer  text-white "
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="font-bold text-3xl text-center">Heads Up!</h2>
+            <hr className="border-t mt-2 mb-2 opacity-20" />
+            <p className="text-lg text-center">
+              Just a heads-up! This page is like a shooting star—one-time only.
+              Feel free to share it as much as you like, but once you leave,
+              poof! It’s gone forever (that’s the guest life). So, don’t let it
+              slip away!
+            </p>
+          </div>
+        </div>
+      )}
       <div className="bg-white shadow-xl rounded-lg p-8 max-w-2xl lg:w-[45rem] w-full ">
         <div className="text-center py-5 mb-1">
-          {/* <h3 className="text-3xl text-left md:text-4xl font-bold ">
-            Hey <span className="text-red-700">{data?.user?.name}</span>,
-          </h3>
-           */}
           <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
             No one knows when, But we know how{" "}
-            <span className="text-red-700 ">{data?.user?.name ?? "Guest"}</span>{" "}
-            Will leave the world because of:
+            <span className="text-red-700 ">{name ?? "Guest"}</span> Will leave
+            the world because of:
           </h1>
           <hr className="border-t w-full md:w-1/2 mx-auto" />
-          <p className="text-4xl md:text-6xl text-red-700 font-bold tracking-wider mt-3">
-            COVID-19
+          <p className="text-4xl md:text-5xl text-red-700 font-bold tracking-wider mt-3">
+            {result || "Unknown"}
           </p>
         </div>
         <Image
-          src={imageURL}
-          alt="Result Share Image"
+          src={image ?? "/images/unknown.jpg"}
+          alt={result.toString() ?? "Unknown"}
           width={500}
           height={500}
+          loading="lazy"
+          quality={75}
+          placeholder="blur"
+          blurDataURL={image ?? "/images/unknown.jpg"}
           className="w-full h-auto rounded-lg"
         />
         <div className="mb-6 text-center mt-10">
-          {/* <h2 className="text-xl lg:text-2xl font-semibold">
-            Share Your Results
-          </h2>
-          <hr className="border-t mt-3 w-1/2 mx-auto" /> */}
-
           <ShareButtons
             shareUrl={shareUrl}
             title={shareTitle}
             description={shareDescription}
-            image={imageURL}
+            image={image ?? "/images/unknown.jpg"}
           />
         </div>
-        {/* <div className="flex justify-center space-x-4">
-          <button
-            onClick={() => router.push("/user/questions")}
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
-          >
-            Retake Assessment
-          </button>
-          <button
-            onClick={() => router.push("/user")}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-          >
-            View Dashboard
-          </button>
-        </div> */}
         <hr className="border-t py-3 w-1/2 mx-auto" />{" "}
         <h2 className="text-xl lg:text-2xl font-semibold text-center">
           Thanks for sharing your data with the world

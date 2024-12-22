@@ -5,9 +5,9 @@ export type Question = {
   options?: string[] | number[];
   min?: number;
   max?: number;
-  defaultValue?: number | string;
   description?: string;
   component?: string;
+  dataType?: "number" | "string";
 };
 
 export type Category = {

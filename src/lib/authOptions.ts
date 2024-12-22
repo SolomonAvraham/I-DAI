@@ -7,9 +7,15 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
-
   session: {
     strategy: "jwt",
   },
@@ -24,11 +30,12 @@ export const authOptions: NextAuthOptions = {
       if (session.user && token.id) {
         session.user.id = token.id as string;
       }
+
       return session;
     },
-    async redirect({ baseUrl }) {
-      return baseUrl + "/user/questions";
-    },
+    // async redirect({ baseUrl }) {
+    //    return baseUrl + "/user/questions";
+    // },
   },
   pages: {
     signIn: "/signin",

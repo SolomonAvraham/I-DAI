@@ -7,27 +7,21 @@ export interface IQuestions extends Document {
   country: string;
   city: string;
   income: number;
-  bmi:
-    | "Below-18.5"
-    | "18.5-24.9"
-    | "25.0-29.9"
-    | "30.0-34.9"
-    | "35.0-39.9"
-    | "Above-40";
+  bmi: number;
   maritalStatus: "Married" | "Single" | "Divorced" | "Widowed";
   children: number;
 
   // Medical and Family History
   heartDisease: number;
   cancer: number;
-  mentalIllness: number;
   chronicIllnesses: number;
+  chronicIllnesses_1: number;
 
   // Lifestyle and Habits
   smoke: number;
   alcohol: 0 | 1 | 2 | 3 | 4 | 5;
   physicalActivity: 1 | 2 | 3 | 4 | 5;
-  stressLevel: 1 | 2 | 3 | 4 | 5;
+  stressLeve: 1 | 2 | 3 | 4 | 5;
 
   // Mental Health and Well-being
   depression: number;
@@ -68,29 +62,27 @@ export interface IQuestions extends Document {
   workSupport: number;
 
   // Hobbies and Leisure Activities
-  riskyLeisure: number;
+  riskyLeisur: number;
   frequentTravel: number;
   safetyGear: number;
+
+  // Cause Of Death
+  causeofdeath: string;
 }
 
-const questionsSchema: Schema = new Schema(
+export const questionsSchema: Schema = new Schema(
   {
     // General Information
+
     age: { type: Number, required: true, min: 18, max: 120 },
     gender: { type: String, enum: ["Male", "Female"], required: true },
     country: { type: String, required: true },
     city: { type: String, required: true },
     income: { type: Number, required: true, min: 0, max: 1000000 },
     bmi: {
-      type: String,
-      enum: [
-        "Below-18.5",
-        "18.5-24.9",
-        "25.0-29.9",
-        "30.0-34.9",
-        "35.0-39.9",
-        "Above-40",
-      ],
+      type: Number,
+      min: 0,
+      max: 50,
       required: true,
     },
     maritalStatus: {
@@ -103,14 +95,14 @@ const questionsSchema: Schema = new Schema(
     // Medical and Family History
     heartDisease: { type: Number, required: true },
     cancer: { type: Number, required: true },
-    mentalIllness: { type: Number, required: true },
     chronicIllnesses: { type: Number, required: true },
+    chronicIllnesses_1: { type: Number, required: true },
 
     // Lifestyle and Habits
     smoke: { type: Number, required: true },
     alcohol: { type: Number, min: 0, max: 5, required: true },
     physicalActivity: { type: Number, min: 1, max: 5, required: true },
-    stressLevel: { type: Number, min: 1, max: 5, required: true },
+    stressLeve: { type: Number, min: 1, max: 5, required: true },
 
     // Mental Health and Well-being
     depression: { type: Number, required: true },
@@ -159,9 +151,10 @@ const questionsSchema: Schema = new Schema(
     workSupport: { type: Number, required: true },
 
     // Hobbies and Leisure Activities
-    riskyLeisure: { type: Number, required: true },
+    riskyLeisur: { type: Number, required: true },
     frequentTravel: { type: Number, required: true },
     safetyGear: { type: Number, required: true },
+    causeofdeath: { type: String, required: false },
   },
   { timestamps: true }
 );
