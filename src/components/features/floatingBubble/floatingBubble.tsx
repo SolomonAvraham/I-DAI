@@ -21,7 +21,7 @@ const FloatingBubble: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 flex flex-col items-center space-y-2">
+    <div className="fixed bottom-5 right-5 flex flex-col items-center space-y-2 z-40">
       {/* Main Floating Bubble */}
       <div
         className="relative border border-slate-800 bg-slate-900 text-white flex items-center justify-center text-center rounded-full shadow-lg animate-bounce-slow"
@@ -41,7 +41,7 @@ const FloatingBubble: React.FC = () => {
         <div className="text-xs mt-5 font-bold">
           <p>Each second,</p>
           <p>2 human beings die.</p>
-          <p className="text-lg font-semibold mt-2">{deathCount}</p>
+          <p className="text-lg font-semibold mt-1">{deathCount}</p>
         </div>
       </div>
 

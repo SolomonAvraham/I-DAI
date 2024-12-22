@@ -20,6 +20,7 @@ const BMICalculator = ({
       const roundedBMI = parseFloat(bmiValue.toFixed(2)); // Limit to 2 decimal places
       setBMI(roundedBMI); // Update local state
       onBMIChange(roundedBMI); // Pass BMI value to parent component
+      setOpenBMICalculator(false);
     }
   };
 

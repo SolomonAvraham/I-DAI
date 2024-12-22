@@ -1,7 +1,7 @@
 "use client";
 
 import ShareButtons from "@/components/features/buttons/shareButtons";
-import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,15 +9,16 @@ type ResultsPageProps = {
   name: string;
   result: string;
   image: string;
+  email: string;
+  id: string;
 };
 
-const ResultsPage = (userResult: ResultsPageProps, id: string) => {
-  const { name, result, image } = userResult;
-  const { data } = useSession();
+const ResultsPage = (userResult: ResultsPageProps) => {
+  const { name, result, image, email, id } = userResult;
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!data) {
+    if (!email) {
       setTimeout(() => {
         setShowModal(true);
         setTimeout(() => {
@@ -25,7 +26,14 @@ const ResultsPage = (userResult: ResultsPageProps, id: string) => {
         }, 3000);
       }, 2300);
     }
-  }, [data]);
+  }, [email]);
+
+  useEffect(() => {
+    signOut({ redirect: false });
+    localStorage.removeItem("questionnaireProgress");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("name");
+  }, []);
 
   const shareUrl = `https://i-dai.com/results/${id}`;
   const shareTitle = "I Discovered My Life Expectancy Risk Factors";
@@ -55,7 +63,7 @@ const ResultsPage = (userResult: ResultsPageProps, id: string) => {
           <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
             No one knows when, But we know how{" "}
             <span className="text-red-700 ">{name ?? "Guest"}</span> Will leave
-            the world because of:
+            the world:
           </h1>
           <hr className="border-t w-full md:w-1/2 mx-auto" />
           <p className="text-4xl md:text-5xl text-red-700 font-bold tracking-wider mt-3">

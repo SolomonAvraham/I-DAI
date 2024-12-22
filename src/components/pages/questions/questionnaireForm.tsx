@@ -14,15 +14,15 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
   const sendQuestionsMutation = UseSendQuestionsMutation();
 
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+
   useEffect(() => {
     if (id) {
       localStorage.setItem("userId", id);
       localStorage.setItem("name", name);
     }
   }, [id]);
-
-  const userId =
-    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
 
   const userName =
     typeof window !== "undefined"

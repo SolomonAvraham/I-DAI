@@ -16,11 +16,10 @@ export async function generateMetadata({
   params,
 }: PageParams): Promise<Metadata> {
   const { id } = await params;
-
+ 
   const userResult = await getResult(id);
 
-  // If no valid result, return default metadata
-  if (!userResult || userResult.message) {
+   if (!userResult || userResult.message) {
     return {
       title: "Discover Your Destiny - Life Prediction Quiz",
       description:
@@ -96,7 +95,7 @@ export default async function PublicResultPage({ params }: PageParams) {
           <h1 className="text-2xl md:text-6xl tracking-wide py-2 font-bold">
             No one knows when, But we know how{" "}
             <span className="text-red-700">{name ?? "Guest"}</span> Will leave
-            the world because of:
+            the world:
           </h1>
           <hr className="border-t opacity-15 w-full md:w-1/2 mx-auto" />
           <p className="text-4xl md:text-6xl text-red-700 font-bold tracking-wider mt-3">

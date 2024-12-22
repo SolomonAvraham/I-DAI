@@ -1,14 +1,12 @@
 import ResultsPage from "@/components/pages/resultsPage/resultsPage";
 import { getResult } from "@/services/userService";
 import { redirect } from "next/navigation";
- 
 
-type ResultPageProps = {
+export type ResultPageProps = {
   params: Promise<{ id: string }>;
 };
 
 export default async function ResultPage({ params }: ResultPageProps) {
-  // You can now safely use params.id
   const { id } = await Promise.resolve(params);
 
   const userResult = await getResult(id);
@@ -26,10 +24,9 @@ export default async function ResultPage({ params }: ResultPageProps) {
   ) {
     return redirect("/user/questions");
   }
-
   return (
     <div className="py-10 grid place-items-center">
-      <ResultsPage {...userResult} id={id} />
+      <ResultsPage {...userResult} />
     </div>
   );
 }

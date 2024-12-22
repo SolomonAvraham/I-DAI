@@ -42,7 +42,7 @@ export async function GET(
       );
     }
 
-    const { name, questions } = user;
+    const {  _id, name, questions, email } = user;
 
     if (questions[0]["causeofdeath"] === "") {
       return NextResponse.json(
@@ -67,7 +67,10 @@ export async function GET(
       ? `/images/${matchedImage}`
       : `/images/unknown.jpg`;
 
-    return NextResponse.json({ name, result, image }, { status: 200 });
+    return NextResponse.json(
+      { id: _id, name, result, image, email: email ?? null },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(

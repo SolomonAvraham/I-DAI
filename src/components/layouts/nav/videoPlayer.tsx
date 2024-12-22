@@ -26,7 +26,7 @@ export default function VideoPlayer() {
     <div className="video-container relative">
       <button
         onClick={toggleFullscreen}
-        className="btn btn-xs text-white hover:bg-slate-50 hover:text-black text-sm absolute top-1 right-2 z-10"
+        className="btn btn-xs btn-ghost text-white hover:bg-slate-50 hover:text-black text-sm absolute top-1 right-2 z-10"
       >
         <RiFullscreenLine />
       </button>

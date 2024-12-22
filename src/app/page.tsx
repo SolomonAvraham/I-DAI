@@ -24,18 +24,7 @@ export default function Home() {
         </div>
 
         <div className="w-[90%] md:w-[40%] max-w-4xl aspect-video mx-auto mt-10 mb-10">
-          <VideoPlayer/>
-          {/* <video autoPlay loop muted playsInline className=" rounded-2xl">
-            <source src="/video/I-dai.mp4" type="video/mp4" />
-          </video> */}
-          {/* <iframe
-            src="https://www.youtube.com/embed/yaPh1BRlxi4?autoplay=1&mute=1&loop=1&disablekb=1&playlist=yaPh1BRlxi4&start=0"
-            className="w-full h-full rounded-3xl"
-            title="I-DAI - Predict How You Will Die"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            id="ytplayer"
-          ></iframe> */}
+          <VideoPlayer />
         </div>
 
         <div className="flex   flex-col items-center text-center font-semibold text-slate-100 gap-10 tracking-widest">
