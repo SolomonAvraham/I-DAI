@@ -220,7 +220,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
 
       if (!storedName || !name) {
         alert("Please sign in to continue");
-        router.push("/signin");
+        router.push("/?trigger=true");
         return;
       }
 

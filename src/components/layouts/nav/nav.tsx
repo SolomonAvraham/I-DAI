@@ -68,7 +68,8 @@ export default function Navbar() {
         I-DAI
       </button>
       <div
-        className={`${usePathName === "/" && "text-white"} text order-2 ${
+        className={` text-white
+          text order-2 ${
           hideUserInfo && "hidden"
         } gap-1 items-center`}
       >
