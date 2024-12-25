@@ -42,7 +42,7 @@ export async function GET(
       );
     }
 
-    const {  _id, name, questions, email } = user;
+    const { _id, name, questions, email, image } = user;
 
     if (questions[0]["causeofdeath"] === "") {
       return NextResponse.json(
@@ -63,12 +63,19 @@ export async function GET(
 
     const matchedImage = imageFiles.find((file) => file === `${result}.jpg`);
 
-    const image = matchedImage
+    const resultImage = matchedImage
       ? `/images/${matchedImage}`
       : `/images/unknown.jpg`;
 
     return NextResponse.json(
-      { id: _id, name, result, image, email: email ?? null },
+      {
+        id: _id,
+        name,
+        image: image ?? null,
+        result,
+        resultImage,
+        email: email ?? null,
+      },
       { status: 200 }
     );
   } catch (error) {

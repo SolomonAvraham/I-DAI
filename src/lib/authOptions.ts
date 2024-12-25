@@ -16,6 +16,17 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
   session: {
     strategy: "jwt",
   },
@@ -33,9 +44,6 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    // async redirect({ baseUrl }) {
-    //    return baseUrl + "/user/questions";
-    // },
   },
   pages: {
     signIn: "/signin",

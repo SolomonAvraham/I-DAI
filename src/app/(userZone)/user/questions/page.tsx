@@ -1,4 +1,5 @@
 import QuestionnaireForm from "@/components/pages/questions/questionnaireForm";
+import { authOptions } from "@/lib/authOptions";
 import {
   GoogleLoginResponse,
   isUserExistsGoogle,
@@ -6,7 +7,7 @@ import {
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 export default async function QuestionsPage() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   const user = session?.user as GoogleLoginResponse;
 

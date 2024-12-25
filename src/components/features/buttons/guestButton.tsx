@@ -1,24 +1,43 @@
 "use client";
 
+import { signOutSession } from "@/services/userService";
+import useUserStore from "@/store/userStore";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+function generateRandomNumber(min = 10352) {
+  const randomNumber = Math.floor(Math.random() * 10000) + min + 1;
+  return randomNumber;
+}
+
 export default function GuestButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [guestName, setGuestName] = useState("Guest");
+  const [guestName, setGuestName] = useState("");
   const router = useRouter();
 
+  const { setUser } = useUserStore();
+
+  const randomNumber = generateRandomNumber();
+
   const handleGuest = async () => {
-    if (!guestName.trim()) {
-      alert("Please enter a name.");
-      return;
-    }
-
     try {
-      localStorage.setItem("name", guestName);
-
+      await signOutSession();
       await signOut({ redirect: false });
+
+      const nameValue =
+        guestName.trim() !== ""
+          ? guestName
+          : `Guest ${randomNumber.toString()}`;
+
+      setGuestName(nameValue);
+
+      localStorage.setItem("name", nameValue);
+
+      setUser({
+        name: nameValue,
+      });
+
       localStorage.removeItem("questionnaireProgress");
       localStorage.removeItem("userId");
 
@@ -45,8 +64,10 @@ export default function GuestButton() {
           <div className="modal-box  bg-slate-50 flex flex-col items-center justify-center">
             <h2 className="font-bold text-lg">Enter Your Nickname here</h2>
             <input
+              id="randomInput"
               type="text"
               className="input input-bordered text-center w-full border border-gray-400 bg-slate-100 md:w-1/2 my-4"
+              placeholder={`Guest ${randomNumber.toString()}`}
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
               maxLength={20}

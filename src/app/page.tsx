@@ -10,10 +10,10 @@ export default function Home() {
   const shouldTriggerButton = searchParams.get("trigger") === "true";
 
   return (
-    <div className="bg-black text-white bg-opacity-5 relative h-screen">
+    <div className="  text-white   relative">
       <VideoBackground />
 
-      <div className="min-h-screen  flex flex-col items-center justify-center py-10 ">
+      <div className="  flex flex-col items-center justify-center py-10 ">
         <div className="font-semibold ps-3 md:ps-8 mt-10">
           <h1 className="tracking-wider  text-3xl md:text-6xl lg:text-8xl xl:text-9xl ">
             Statistically Speaking:

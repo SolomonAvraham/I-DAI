@@ -29,3 +29,13 @@ export const isUserExistsGoogle = async (user: GoogleLoginResponse) => {
     throw error;
   }
 };
+
+export const signOutSession = async () => {
+  try {
+    const response = await axiosInstance.post("/api/auth/signout");
+    return response.data;
+  } catch (error) {
+    console.error("Error signing out:", error);
+    throw error;
+  }
+};

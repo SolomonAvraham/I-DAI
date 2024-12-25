@@ -1,6 +1,8 @@
 "use client";
 
 import ShareButtons from "@/components/features/buttons/shareButtons";
+import { signOutSession } from "@/services/userService";
+import useUserStore from "@/store/userStore";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -11,31 +13,39 @@ type ResultsPageProps = {
   image: string;
   email: string;
   id: string;
+  resultImage: string;
 };
 
 const ResultsPage = (userResult: ResultsPageProps) => {
-  const { name, result, image, email, id } = userResult;
+  const { name, resultImage, result, image, email, id } = userResult;
   const [showModal, setShowModal] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     if (!email) {
-      setTimeout(() => {
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-        }, 3000);
-      }, 2300);
+      setShowModal(true);
+      setTimeout(() => setShowButton(true), 5000);
     }
   }, [email]);
 
   useEffect(() => {
-    signOut({ redirect: false });
-    localStorage.removeItem("questionnaireProgress");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("name");
+    async function signOutAndSetUser() {
+      await signOutSession();
+
+      await signOut({ redirect: false });
+
+      setUser({ name, id, image });
+
+      localStorage.removeItem("questionnaireProgress");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("name");
+    }
+
+    signOutAndSetUser();
   }, []);
 
-  const shareUrl = `https://i-dai.com/results/${id}`;
+  const shareUrl = `https://i-dai.com/result/${id}`;
   const shareTitle = "I Discovered My Life Expectancy Risk Factors";
   const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
 
@@ -44,7 +54,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
       {showModal && (
         <div className="modal modal-open" onClick={() => setShowModal(false)}>
           <div
-            className="modal-box cursor-pointer  text-white "
+            className="modal-box cursor-pointer grid place-items-center text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="font-bold text-3xl text-center">Heads Up!</h2>
@@ -55,6 +65,16 @@ const ResultsPage = (userResult: ResultsPageProps) => {
               poof! It’s gone forever (that’s the guest life). So, don’t let it
               slip away!
             </p>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className={`btn btn-outline text-xl mt-3 ${
+                !showButton && "opacity-50"
+              }`}
+              disabled={!showButton}
+            >
+              OK
+            </button>
           </div>
         </div>
       )}
@@ -71,14 +91,14 @@ const ResultsPage = (userResult: ResultsPageProps) => {
           </p>
         </div>
         <Image
-          src={image ?? "/images/unknown.jpg"}
+          src={resultImage ?? "/images/i-dai.png"}
           alt={result.toString() ?? "Unknown"}
           width={500}
           height={500}
           loading="lazy"
           quality={75}
           placeholder="blur"
-          blurDataURL={image ?? "/images/unknown.jpg"}
+          blurDataURL={image ?? "/images/i-dai.png"}
           className="w-full h-auto rounded-lg"
         />
         <div className="mb-6 text-center mt-10">

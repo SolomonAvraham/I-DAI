@@ -6,8 +6,7 @@ import FloatingBubble from "@/components/features/floatingBubble/floatingBubble"
 import QueryProvider from "@/components/providers/queryProvider/queryProvider";
 import Navbar from "@/components/layouts/nav/nav";
 
-const imageUrl =
-  "https://images.pexels.com/photos/1270184/pexels-photo-1270184.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+const imageUrl = "/images/Death due to extreme laughter.jpg";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://i-dai.com"),
@@ -36,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "I-DAI - Discover Your Fate",
     description: "Explore quizzes and discover insights with I-DAI.",
-    images: [imageUrl], // Replace with your actual Twitter card image path
+    images: [imageUrl],
   },
   robots: {
     index: true,
@@ -67,10 +66,10 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className="min-h-screen  ">
+      <body className="min-h-screen">
         <SessionProvider session={session}>
           <QueryProvider>
-            <header className="rounded-b-2xl ">
+            <header>
               <Navbar />
             </header>
             {children}

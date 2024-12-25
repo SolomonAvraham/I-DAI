@@ -27,9 +27,9 @@ export async function generateMetadata({
     };
   }
 
-  const { name, image } = userResult;
+  const { name, resultImage } = userResult;
   const baseUrl = BASE_URL || "https://i-dai.com";
-  const imageURL = image || `${baseUrl}/images/unknown.jpg`;
+  const imageURL = resultImage || `${baseUrl}/images/unknown.jpg`;
 
   return {
     title: `${name}'s Destiny Has Been Revealed!`,

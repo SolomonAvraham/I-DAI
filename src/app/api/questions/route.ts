@@ -3,7 +3,7 @@ import connectToDatabase from "@/db";
 import QuestionsModel from "@/db/models/questionsModel";
 import axios from "axios";
 import UserModel from "@/db/models/userModel";
- 
+
 export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
@@ -37,7 +37,17 @@ export async function POST(req: NextRequest) {
       const resultArray = responseObject.result;
 
       if (Array.isArray(resultArray) && resultArray.length > 0) {
-        const result = resultArray[0].pop();
+        let result = resultArray[0].pop();
+
+        const count = await UserModel.countDocuments({});
+
+        if (
+          result === "Death due to extreme laughter" ||
+          (result === "Death due to laughter (extreme cases of asphyxiation)" &&
+            count >= 500000)
+        ) {
+          result = "Heart attack (myocardial infarction)";
+        }
 
         const newQuestion = new QuestionsModel({
           ...body.completeResponses,
@@ -49,7 +59,6 @@ export async function POST(req: NextRequest) {
             name: userName,
             questions: [newQuestion],
             formSubmitted: true,
-            
           });
 
           await newUser.save();
@@ -65,10 +74,10 @@ export async function POST(req: NextRequest) {
         const updatedUser = await UserModel.findOneAndUpdate(
           { _id: id },
           {
-            $push: { questions: newQuestion }, // Add the new question to the questions array
-            $set: { formSubmitted: true }, // Mark formSubmitted as true
+            $push: { questions: newQuestion },
+            $set: { formSubmitted: true },
           },
-          { new: true, upsert: false } // Return the updated document, do not create a new one
+          { new: true, upsert: false }
         );
 
         if (!updatedUser) {
