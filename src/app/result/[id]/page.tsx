@@ -16,10 +16,10 @@ export async function generateMetadata({
   params,
 }: PageParams): Promise<Metadata> {
   const { id } = await params;
- 
+
   const userResult = await getResult(id);
 
-   if (!userResult || userResult.message) {
+  if (!userResult || userResult.message) {
     return {
       title: "Discover Your Destiny - Life Prediction Quiz",
       description:
@@ -84,7 +84,7 @@ export default async function PublicResultPage({ params }: PageParams) {
     return redirect("/user/questions");
   }
 
-  const { name, result, image } = userResult;
+  const { name, result, resultImage } = userResult;
 
   return (
     <div className="relative min-h-screen py-10 flex items-center justify-center">
@@ -106,14 +106,14 @@ export default async function PublicResultPage({ params }: PageParams) {
 
         <div className="w-5/6 md:w-1/2">
           <Image
-            src={image ?? "/images/unknown.jpg"}
+            src={resultImage ?? "/images/unknown.jpg"}
             alt={result?.toString() ?? "Unknown"}
             width={500}
             height={500}
             loading="lazy"
             quality={75}
             placeholder="blur"
-            blurDataURL={image ?? "/images/unknown.jpg"}
+            blurDataURL={resultImage ?? "/images/unknown.jpg"}
             className="w-full h-auto rounded-lg"
           />
         </div>

@@ -53,15 +53,22 @@ export async function GET(
       );
     }
 
-    const result = questions[0]["causeofdeath"];
+    const result = questions[0]["causeofdeath"].trim();
+
+    const sanitizedResult = result.replace(/[:\/\\]/g, "_");
 
     const imagesFolder = path.join(process.cwd(), "public/images");
     const files = await fs.readdir(imagesFolder);
-    const imageFiles = files.filter((file) =>
-      [".jpg", ".jpeg", ".png"].includes(path.extname(file).toLowerCase())
-    );
+    const imageFiles = files
+      .map((file) => file.trim().replace(/[:\/\\]/g, "_"))
+      .filter((file) =>
+        [".jpg", ".jpeg", ".png"].includes(path.extname(file).toLowerCase())
+      );
 
-    const matchedImage = imageFiles.find((file) => file === `${result}.jpg`);
+    const matchedImage = imageFiles.find((file) => {
+      const fileWithoutExtension = path.basename(file, path.extname(file));
+      return fileWithoutExtension === sanitizedResult;
+    });
 
     const resultImage = matchedImage
       ? `/images/${matchedImage}`
