@@ -16,13 +16,12 @@ interface QuestionInputProps {
   countryAndCityErrors?: string;
 }
 
-
 const getOptionLabel = (
   option: string | number,
   questionName: string
 ): string => {
   if (questionName === "children") {
-    if (option === 0) return "None";
+    if (option === 0) return "0";
     if (option === 10) return "10+";
     return option.toString();
   }
@@ -34,7 +33,6 @@ const getOptionLabel = (
 
   return option.toString();
 };
-
 
 export const QuestionInput: React.FC<QuestionInputProps> = ({
   question,
@@ -68,7 +66,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex items-center">
             <input
-              value={Number(currentValue) || ""}
+              value={currentValue === null ? "" : String(currentValue)}
               type="number"
               min={question.min}
               max={question.max}
@@ -76,7 +74,6 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               onChange={(e) =>
                 handleInputChange(question.name, Number(e.target.value))
               }
-              defaultValue={question.name === "trafficViolations" ? 0 : ""}
               className={`
               ${inputBaseClasses} ${errorClasses}
               input input-bordered border-black border-[0.001px] text-center text-black

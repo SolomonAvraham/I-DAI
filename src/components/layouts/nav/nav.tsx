@@ -64,7 +64,7 @@ export default function Navbar() {
           router.push("/");
         }}
         className={`${
-          !routing && "text-gray-900"
+          !routing && "text-slate-950 "
         } order-1 text-white tracking-wider  normal-case font-bold md:text-3xl text-2xl hover:text-gray-400  cursor-pointer`}
       >
         I-DAI
