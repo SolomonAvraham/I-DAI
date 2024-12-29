@@ -46,8 +46,8 @@ const ResultsPage = (userResult: ResultsPageProps) => {
   }, []);
 
   const shareUrl = `https://i-dai.com/result/${id}`;
-  const shareTitle = "I Discovered My Life Expectancy Risk Factors";
-  const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
+  //const shareTitle = "I Discovered My Life Expectancy Risk Factors";
+  //const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
 
   return (
     <div className="min-h-screen text-gray-700 bg-gray-100 flex flex-col items-center justify-center p-4">
@@ -104,8 +104,6 @@ const ResultsPage = (userResult: ResultsPageProps) => {
         <div className="mb-6 text-center mt-10">
           <ShareButtons
             shareUrl={shareUrl}
-            title={shareTitle}
-            description={shareDescription}
             image={image ?? "/images/unknown.jpg"}
           />
         </div>

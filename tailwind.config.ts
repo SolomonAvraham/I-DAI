@@ -8,10 +8,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
       screens: {
         xs: "320px",
         xl: "1440px",
@@ -19,5 +15,5 @@ export default {
       },
     },
   },
-  plugins: [require("daisyui") ],
+  plugins: [require("daisyui")],
 } satisfies Config;

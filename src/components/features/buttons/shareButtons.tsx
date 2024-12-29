@@ -14,33 +14,22 @@ import {
 
 type ShareButtonsProps = {
   shareUrl: string;
-  title: string;
-  description: string;
   image: string;
 };
 
-export default function ShareButtons({
-  shareUrl,
-  title,
-  description,
-}: ShareButtonsProps) {
+export default function ShareButtons({ shareUrl }: ShareButtonsProps) {
   return (
     <div className="flex justify-center gap-4 mt-4">
       <FacebookShareButton url={shareUrl}>
         <FacebookIcon size={48} round className="hover:scale-105" />
       </FacebookShareButton>
-      <TwitterShareButton url={shareUrl} title={title}>
+      <TwitterShareButton url={shareUrl}>
         <XIcon size={48} round className="hover:scale-105" />
       </TwitterShareButton>
-      <LinkedinShareButton
-        source="https://i-dai.com"
-        url={shareUrl}
-        title={title}
-        summary={description}
-      >
+      <LinkedinShareButton source="https://i-dai.com" url={shareUrl}>
         <LinkedinIcon size={48} round className="hover:scale-105" />
       </LinkedinShareButton>
-      <WhatsappShareButton url={shareUrl} title={description} separator="">
+      <WhatsappShareButton url={shareUrl} separator="">
         <WhatsappIcon size={48} round className="hover:scale-105" />
       </WhatsappShareButton>
     </div>

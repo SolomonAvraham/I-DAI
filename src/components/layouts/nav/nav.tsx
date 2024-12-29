@@ -49,23 +49,26 @@ export default function Navbar() {
     localStorage.removeItem("userId");
     localStorage.removeItem("name");
   }
-
-  const routing = usePathName === "/" || usePathName.startsWith("/result");
+  const routing =
+    usePathName === "/signin" ||
+    usePathName === "/user/questions" ||
+    usePathName.startsWith("/user/result")  
 
   return (
     <nav
-      className={` ${
-        routing && "bg-transparent"
-      } navbar bg-gray-100 text-black flex items-center justify-between px-6 py-2 z-50`}
+      className={`
+        ${routing ? "bg-gray-100" : "bg-transparent"}
+        navbar  text-black flex items-center justify-between px-6 py-2 z-50`}
     >
       <button
         onClick={() => {
           router.refresh();
           router.push("/");
         }}
-        className={`${
-          !routing && "text-slate-950 "
-        } order-1 text-white tracking-wider  normal-case font-bold md:text-3xl text-2xl hover:text-gray-400  cursor-pointer`}
+        className={` 
+          ${routing ? "text-black" : "text-white"}
+
+          order-1 tracking-wider  normal-case font-bold md:text-3xl text-2xl hover:text-gray-400  cursor-pointer`}
       >
         I-DAI
       </button>

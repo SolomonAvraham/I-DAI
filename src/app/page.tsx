@@ -5,6 +5,9 @@ import VideoBackground from "@/components/layouts/nav/videoBackground";
 import VideoPlayer from "@/components/layouts/nav/videoPlayer";
 import { useSearchParams } from "next/navigation";
 
+ 
+
+ 
 export default function Home() {
   const searchParams = useSearchParams();
   const shouldTriggerButton = searchParams.get("trigger") === "true";

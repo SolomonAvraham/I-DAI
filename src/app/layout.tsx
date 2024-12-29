@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, MetadataRoute, Viewport } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/providers/sessionProvider/sessionProvider";
@@ -6,9 +6,49 @@ import FloatingBubble from "@/components/features/floatingBubble/floatingBubble"
 import QueryProvider from "@/components/providers/queryProvider/queryProvider";
 import Navbar from "@/components/layouts/nav/nav";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+export function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/", "/admin/", "/_next/", "/static/"],
+    },
+    sitemap: "https://i-dai.com/sitemap.xml",
+    host: "https://i-dai.com",
+  };
+}
+
 const imageUrl = "/images/Death due to extreme laughter.jpg";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png", // This should be 180x180px
+  },
+  manifest: "/manifest.json",
+  applicationName: "I-DAI",
+  keywords: [
+    "personality quiz",
+    "death prediction",
+    "fortune telling",
+    "online quiz",
+    "entertainment",
+    "destiny",
+    "fate",
+    "personality test",
+    "fun quiz",
+    "death quiz",
+  ],
+  creator: "Dev-Sol",
+  authors: [{ name: "I-DAI Team" }],
+  publisher: "I-DAI",
   metadataBase: new URL("https://i-dai.com"),
   title: {
     default: "I-DAI - Discover Your fate",
@@ -37,24 +77,8 @@ export const metadata: Metadata = {
     description: "Explore quizzes and discover insights with I-DAI.",
     images: [imageUrl],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
   verification: {
-    google: "your-google-site-verification-code", // Replace with actual verification code if used
+    google: process.env.GOOGLE_CLIENT_SECRET,
   },
 };
 
@@ -66,14 +90,18 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className="">
         <SessionProvider session={session}>
           <QueryProvider>
-              <main className="min-high-screen"> <header className="">
-              <Navbar />
-            </header>
-         
-            {children}</main>
+            <main className="min-high-screen">
+              <header className="">
+                <Navbar />
+              </header>
+              {children}
+            </main>
           </QueryProvider>
         </SessionProvider>
         <FloatingBubble />

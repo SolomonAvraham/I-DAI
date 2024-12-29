@@ -74,13 +74,15 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               onChange={(e) =>
                 handleInputChange(question.name, Number(e.target.value))
               }
+              // readOnly
+              // onFocus={(e) => e.target.removeAttribute('readonly')}
               className={`
               ${inputBaseClasses} ${errorClasses}
-              input input-bordered border-black border-[0.001px] text-center text-black
-              ${
-                question.name === "income" ||
-                (question.name === "trafficViolations" && "md:w-11/12")
-              }
+            input input-bordered border-black border-[0.001px] text-center text-black
+            ${
+              question.name === "income" ||
+              (question.name === "trafficViolations" && "md:w-11/12")
+            }
               ${question.name === "age" && "w-4/12 md:w-11/12"}
               ${question.name === "bmi" && " w-11/12 "}
             `}

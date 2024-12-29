@@ -1,11 +1,12 @@
 "use client";
+
 import VideoBackground from "@/components/layouts/nav/videoBackground";
 import React from "react";
-
-const ErrorPage = () => { 
-   return (
+ 
+const ErrorPage = () => {
+  return (
     <div className=" text-white relative flex justify-center items-center h-screen  text-center">
-     <VideoBackground/>
+      <VideoBackground />
       <div>
         <h1 className="text-8xl font-bold text-warning ">ERROR</h1>
         <h1 className="text-5xl font-bold text-error">500</h1>

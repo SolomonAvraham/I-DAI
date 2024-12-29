@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   if (!userResult || userResult.message) {
     return {
-      title: "Discover Your Destiny - Life Prediction Quiz",
+      title: "Discover Your Destiny - Death Prediction Quiz",
       description:
         "Take our quiz to uncover how your story might end. Are you brave enough to know?",
     };
@@ -32,13 +32,23 @@ export async function generateMetadata({
   const imageURL = resultImage || `${baseUrl}/images/unknown.jpg`;
 
   return {
+    metadataBase: new URL(baseUrl),
+    keywords: ["death prediction", "fortune telling", "destiny reveal", "future prediction", "personality quiz", "fate quiz"],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     title: `${name}'s Destiny Has Been Revealed!`,
     description: `${name} just discovered their fate. Want to know yours? Take the quiz now!`,
     openGraph: {
-      title: `${name}'s Life Prediction Result`,
+      title: `${name}'s Death Prediction Result`,
       description: `${name} discovered their destiny. Will you dare to know yours?`,
       url: `${baseUrl}/result/${id}`,
-      siteName: "I-DAI Life Prediction",
+      siteName: "I-DAI | Death Prediction",
       images: [
         {
           url: imageURL,
@@ -52,10 +62,10 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${name}'s Life Prediction Result`,
+      title: `${name}'s Death Prediction Result`,
       description: `${name} just discovered their destiny. Are you brave enough to know yours?`,
       images: [imageURL],
-      creator: "@yourhandle",
+      creator: "@Dev-Sol",
     },
     verification: {
       google: process.env.GOOGLE_CLIENT_SECRET,
