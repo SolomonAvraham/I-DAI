@@ -27,7 +27,7 @@ export default function Home() {
           <VideoPlayer />
         </div>
 
-        <div className="flex   flex-col items-center text-center font-semibold text-slate-100 gap-10 tracking-widest">
+        <div className="flex flex-col items-center text-center font-semibold text-slate-100 gap-10 tracking-widest">
           <h2 className=" text-3xl md:text-5xl xl:text-7xl">
             Do you want to know
             <br />

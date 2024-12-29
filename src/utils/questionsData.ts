@@ -40,8 +40,8 @@ export const questions: Category[] = [
         question: "BMI (Body Mass Index):",
         type: "number",
         name: "bmi",
-        min: 0,
-        max: 100,
+        min: 10,
+        max: 60,
       },
       {
         question: "Marital status:",
@@ -55,7 +55,6 @@ export const questions: Category[] = [
         type: "select",
         name: "children",
         options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-
         dataType: "number",
       },
     ],
@@ -195,7 +194,6 @@ export const questions: Category[] = [
         name: "trafficViolations",
         min: 0,
         max: 100,
-      
       },
       {
         question: "Have you had accidents in the past as a driver?",

@@ -3,15 +3,16 @@
 import { searchCountries } from "@/services/countriesAndCitiesService";
 import { useState, useEffect, useCallback, useRef } from "react";
 
-// Country Search Component
 type CountriesSearchProps = {
   initialValue: string | null;
   onCountrySelect: (country: string) => void;
+  formError?: string | null;
 };
 
 export function CountriesSearch({
   onCountrySelect,
   initialValue,
+  formError,
 }: CountriesSearchProps) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<
@@ -23,6 +24,9 @@ export function CountriesSearch({
   const [selectedCountry, setSelectedCountry] = useState<string | null>(
     initialValue
   );
+
+  const errorClasses =
+    error || formError ? "border-red-500 focus:border-red-500" : "";
 
   useEffect(() => {
     if (initialValue) {
@@ -102,6 +106,7 @@ export function CountriesSearch({
     emoji: string;
   }) => {
     const countryName = country.countryName;
+
     onCountrySelect(countryName);
     setSearch(countryName);
     setSelectedCountry(countryName);
@@ -134,9 +139,9 @@ export function CountriesSearch({
           }
         }}
         placeholder="Search Country"
-        className="border select select-bordered 
+        className={`${errorClasses} select select-bordered border-black border-[0.001px] placeholder:text-center
         bg-slate-100 text-black  
-        focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center"
+        focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center${errorClasses} `}
         required
       />
       {!selectedCountry && isDropdownOpen && results.length > 0 && (
@@ -156,10 +161,20 @@ export function CountriesSearch({
       {loading && (
         <h1 className="text-center text-xs mt-1 font-medium">Loading...</h1>
       )}
-      {error && (
-        <h1 className="text-center text-xs mt-1 font-medium text-red-500">
+      {error ? (
+        <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
           {error}
         </h1>
+      ) : (
+        formError &&
+        !selectedCountry &&
+        !loading && (
+          <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
+            {formError === '"country" must be a string'
+              ? "This field is required"
+              : formError}
+          </h1>
+        )
       )}
     </div>
   );

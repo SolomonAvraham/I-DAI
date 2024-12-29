@@ -66,13 +66,14 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className="">
         <SessionProvider session={session}>
           <QueryProvider>
-            <header>
+              <main className="min-high-screen"> <header className="">
               <Navbar />
             </header>
-            {children}
+         
+            {children}</main>
           </QueryProvider>
         </SessionProvider>
         <FloatingBubble />

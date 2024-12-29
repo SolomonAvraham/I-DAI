@@ -1,7 +1,7 @@
 "use client";
 
 import { questions } from "@/utils/questionsData";
-import { QuestionInput } from "./questionnaireInputs";
+import { QuestionInput } from "../../features/inputs/questionnaireInputs";
 import { useQuestionnaireProgress } from "@/hooks/useQuestionnaireProgress";
 import ProgressBar from "@/components/features/progressBar/progressBar";
 import BMICalculator from "@/components/features/BMICalculator/BMICalculator";
@@ -12,12 +12,15 @@ import Loading from "@/components/features/loading/loading";
 import useUserStore from "@/store/userStore";
 import FactDisplay from "@/components/features/factDisplay/factDisplay";
 import { useRouter } from "next/navigation";
-import riskCategories from "@/utils/riskCategories";
+import riskCategories from "@/utils/riskCategoriesData";
 import getCategoryFacts from "@/utils/getCategoryFacts";
+import { validateField, validateForm } from "@/utils/validation";
 
 const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   const router = useRouter();
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const sendQuestionsMutation = UseSendQuestionsMutation();
   const { setUser, name: userNameStore } = useUserStore();
 
@@ -55,9 +58,15 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
 
   const handleInputChange = (
     name: string,
-    value: string | number | boolean
+    value: string | number | boolean |null | undefined
   ) => {
-    updateResponse(name, value);
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error || "",
+    }));
+
+    updateResponse(name, value ?? null);
     saveProgress();
   };
 
@@ -94,7 +103,34 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   };
 
   const handleNextCategory = () => {
-    // Check if this is the last category
+    const formErrors = validateForm(
+      responses,
+      questions[currentCategory].questions,
+      questions[currentCategory].category
+    );
+
+    let hasErrors = formErrors && Object.keys(formErrors).filter(key => 
+      questions[currentCategory].questions.some(q => q.name === key)
+    ).length > 0;
+    
+    if (questions[currentCategory].questions.some(q => q.type === 'custom-country')) {
+      const countryAndCityErrors = validateField("country", selectedCountry);
+      if (countryAndCityErrors) {
+        setErrors(prev => ({ ...prev, country: countryAndCityErrors }));
+        hasErrors = true;
+      }
+    }
+
+    if (formErrors && Object.keys(formErrors).length > 0) {
+      setErrors(prev => ({ ...prev, ...formErrors }));
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      alert("Please correct the errors before submitting");
+      return;
+    }
+
     const isLastCategory = currentCategory === questions.length - 1;
 
     // If not the last category, proceed with validation
@@ -110,6 +146,18 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formErrors = validateForm(
+      responses,
+      questions[currentCategory].questions,
+      questions[currentCategory].category
+    );
+
+    if (formErrors) {
+      setErrors(formErrors);
+      alert("Please correct the errors before submitting");
+      return;
+    }
 
     const lastCategoryQuestions = questions[questions.length - 1].questions;
     const isLastCategoryComplete = lastCategoryQuestions.every((q) => {
@@ -271,7 +319,11 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                         handleInputChange={handleInputChange}
                         setSelectedCountry={setSelectedCountry}
                         setSelectedCity={setSelectedCity}
-                      />{" "}
+                        error={errors[question.name]}
+                        countryAndCityErrors={
+                          errors["country"] || errors["city"]
+                        }
+                      />
                       {question.name === "bmi" && (
                         <div className="flex gap-3 items-end">
                           <span className="text-5xl text-gray-600 ">

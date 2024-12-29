@@ -50,11 +50,13 @@ export default function Navbar() {
     localStorage.removeItem("name");
   }
 
+  const routing = usePathName === "/" || usePathName.startsWith("/result");
+
   return (
     <nav
       className={` ${
-        usePathName === "/" && "bg-slate-50 "
-      } navbar bg-transparent  text-black flex items-center justify-between px-6 py-2 z-50`}
+        routing && "bg-transparent"
+      } navbar bg-gray-100 text-black flex items-center justify-between px-6 py-2 z-50`}
     >
       <button
         onClick={() => {
@@ -62,20 +64,18 @@ export default function Navbar() {
           router.push("/");
         }}
         className={`${
-          usePathName === "/" && "text-black"
+          !routing && "text-gray-900"
         } order-1 text-white tracking-wider  normal-case font-bold md:text-3xl text-2xl hover:text-gray-400  cursor-pointer`}
       >
         I-DAI
       </button>
       <div
         className={` text-white
-          text order-2 ${
-          hideUserInfo && "hidden"
-        } gap-1 items-center`}
+          text order-2 ${hideUserInfo && "hidden"} gap-1 items-center`}
       >
         {!hideUserInfo && name && (
           <>
-            <div className="text-sm   cursor-default">
+            <div className="text-sm text-black cursor-default">
               <p className="font-semibold">Hello, {name}.</p>
             </div>
 
@@ -93,7 +93,7 @@ export default function Navbar() {
                       alt={`${name}'s Avatar`}
                     />
                   ) : (
-                    <span className="  text-4xl">
+                    <span className="text-black  text-4xl">
                       <FaUserCircle />
                     </span>
                   )}

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 const CountdownTimer = () => {
-  const targetDate = new Date('2024-12-12');
+  const targetDate = new Date('2024-12-30');
   targetDate.setDate(targetDate.getDate() + 60);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -34,7 +34,7 @@ const CountdownTimer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="md:text-2xl font-bold mb-4">
+      <h1 className="md:text-2xl text-sm text-center font-bold mb-4">
         This AI system is free to use for the next:
       </h1>
       <div className="md:text-3xl text-center font-medium">
@@ -42,8 +42,12 @@ const CountdownTimer = () => {
           Days: {timeLeft.days} | Hours: {timeLeft.hours} | Minutes:{" "}
           {timeLeft.minutes} | Seconds: {timeLeft.seconds}
         </p>
-        <p className="text-gray-500  md:text-xl mt-4">
-          Ends on: {targetDate.toLocaleString()}
+        <p className="text-gray-500 md:text-xl mt-4">
+          Ends on: {targetDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }).replace(/\//g, '.')}
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type QuestionsValue = string | number | boolean | null;
+export type QuestionsValue = string | number | boolean | null ;
 
 type QuestionsStore = {
   responses: Record<string, QuestionsValue>;

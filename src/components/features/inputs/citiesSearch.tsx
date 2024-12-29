@@ -6,6 +6,7 @@ type CitiesSearchProps = {
   onCitySelect: (city: string) => void;
   disabled?: boolean;
   initialValue: string | null;
+  formError?: string | null;
 };
 
 export function CitiesSearch({
@@ -13,6 +14,7 @@ export function CitiesSearch({
   onCitySelect,
   disabled = false,
   initialValue,
+  formError,
 }: CitiesSearchProps) {
   const [citySearch, setCitySearch] = useState("");
   const [cityResults, setCityResults] = useState<string[]>([]);
@@ -21,6 +23,9 @@ export function CitiesSearch({
   const [error, setError] = useState<null | string>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(initialValue);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  const errorClasses =
+    error || formError ? "border-red-500 focus:border-red-500" : "";
 
   useEffect(() => {
     setSelectedCity(initialValue);
@@ -42,15 +47,13 @@ export function CitiesSearch({
         setLoading(true);
         const data = await searchCities(searchTerm, country);
 
-        if (data) {
-          if (!Array.isArray(data)) {
-            setError("City not found");
-            setIsDropdownOpen(false);
-          } else {
-            setCityResults(data);
-            setIsDropdownOpen(true);
-          }
+        if (Array.isArray(data) && data.length > 0) {
+          setCityResults(data);
+          setIsDropdownOpen(true);
         } else {
+          setError("City not found");
+          setIsDropdownOpen(false);
+
           setCityResults([]);
           setIsDropdownOpen(false);
         }
@@ -105,7 +108,7 @@ export function CitiesSearch({
 
   if (disabled) {
     return (
-      <div className="mt-4">
+      <div className="mt-4 font-bold">
         <p>Please select a country first.</p>
       </div>
     );
@@ -134,9 +137,9 @@ export function CitiesSearch({
           }
         }}
         placeholder={`Search cities in ${country}...`}
-        className="border select select-bordered 
+        className={`${errorClasses} border select select-bordered placeholder:text-center
               bg-slate-100 text-black  
-              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-xs placeholder-shown:text-start"
+              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-xs placeholder-shown:text-start`}
         disabled={disabled}
         required
       />
@@ -156,10 +159,16 @@ export function CitiesSearch({
       {loading && (
         <h1 className="text-center text-xs mt-1 font-medium">Loading...</h1>
       )}
-      {error && (
-        <h1 className="text-center text-xs mt-1 font-medium text-red-500">
+      {error ? (
+        <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
           {error}
         </h1>
+      ) : (
+        formError && (
+          <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
+            {formError}
+          </h1>
+        )
       )}
     </div>
   );
