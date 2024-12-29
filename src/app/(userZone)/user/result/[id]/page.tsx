@@ -25,7 +25,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
     return redirect("/user/questions");
   }
   return (
-    <div className="py-10 grid place-items-center">
+    <div className=" min-h-screen bg-gray-100 ">
       <ResultsPage {...userResult} />
     </div>
   );

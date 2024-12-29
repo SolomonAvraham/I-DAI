@@ -5,7 +5,7 @@ export default async function SignInPage() {
   const providers = await getProviders();
 
   return (
-    <div className="py-10  bg-gray-100 min-h-screen">
+    <div className="py-5 bg-gray-100">
       <SignIn providers={providers} />
     </div>
   );

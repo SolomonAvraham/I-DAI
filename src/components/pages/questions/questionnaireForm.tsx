@@ -6,7 +6,7 @@ import { useQuestionnaireProgress } from "@/hooks/useQuestionnaireProgress";
 import ProgressBar from "@/components/features/progressBar/progressBar";
 import BMICalculator from "@/components/features/BMICalculator/BMICalculator";
 import { PiArrowBendDownRightFill } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UseSendQuestionsMutation } from "@/lib/queries";
 import Loading from "@/components/features/loading/loading";
 import useUserStore from "@/store/userStore";
@@ -20,6 +20,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   const router = useRouter();
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const formHeaderRef = useRef<HTMLDivElement>(null);
 
   const sendQuestionsMutation = UseSendQuestionsMutation();
   const { setUser, name: userNameStore } = useUserStore();
@@ -58,7 +59,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
 
   const handleInputChange = (
     name: string,
-    value: string | number | boolean |null | undefined
+    value: string | number | boolean | null | undefined
   ) => {
     const error = validateField(name, value);
     setErrors((prev) => ({
@@ -109,20 +110,27 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
       questions[currentCategory].category
     );
 
-    let hasErrors = formErrors && Object.keys(formErrors).filter(key => 
-      questions[currentCategory].questions.some(q => q.name === key)
-    ).length > 0;
-    
-    if (questions[currentCategory].questions.some(q => q.type === 'custom-country')) {
+    let hasErrors =
+      formErrors &&
+      Object.keys(formErrors).filter((key) =>
+        questions[currentCategory].questions.some((q) => q.name === key)
+      ).length > 0;
+
+    if (
+      questions[currentCategory].questions.some(
+        (q) => q.type === "custom-country"
+      )
+    ) {
       const countryAndCityErrors = validateField("country", selectedCountry);
+
       if (countryAndCityErrors) {
-        setErrors(prev => ({ ...prev, country: countryAndCityErrors }));
+        setErrors((prev) => ({ ...prev, country: countryAndCityErrors }));
         hasErrors = true;
       }
     }
 
     if (formErrors && Object.keys(formErrors).length > 0) {
-      setErrors(prev => ({ ...prev, ...formErrors }));
+      setErrors((prev) => ({ ...prev, ...formErrors }));
       hasErrors = true;
     }
 
@@ -138,6 +146,8 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
       if (isCurrentCategoryComplete()) {
         const nextCategory = currentCategory + 1;
         setCurrentCategory(nextCategory);
+        formHeaderRef.current?.scrollIntoView({ behavior: "smooth" });
+
         saveProgress();
       } else {
         alert("Please complete all questions in the current category");
@@ -196,32 +206,32 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
       />
       <div
         className="
-      container 
       flex 
       flex-col
       justify-center 
       items-center  
-      px-4 
-      py-8
       lg:h-[60rem]
       text-center
-      lg:text-left
       relative
     "
+        ref={formHeaderRef}
       >
         {sendQuestionsMutation.isPending ? (
-          <Loading />
+          <div className="grid place-items-center h-screen w-full">
+            <Loading />
+          </div>
         ) : (
           <div
             className="
-        w-full 
+        w-11/12
         lg:w-[50rem]
         xl:w-[70rem]
         h-full
         bg-gray-50 
         rounded-2xl 
         shadow 
-        border 
+        border-[1px]
+        border-gray-950
         flex 
         flex-col 
         justify-between
@@ -232,12 +242,12 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
               className="
           w-full 
           rounded-l-2xl 
-          p-6 
-          py-20
+          p-6  
           flex 
           flex-col 
           justify-center
           h-[15%]
+          gap-3
         "
             >
               <h2
@@ -247,9 +257,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
             xl:text-7xl 
             text-center 
             font-bold 
-            text-blue-800 
-            mb-2
-            mt-10
+            text-blue-800
             tracking-wide
           "
               >
@@ -383,14 +391,15 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                 {currentCategory < questions.length - 1 ? (
                   <button
                     type="button"
-                    className="
+                    className={`
+                      ${currentCategory > 0 ? "w-3/4" : "w-full"}
                   btn btn-primary 
-                  w-1/3
                   lg:w-1/5
                   text-lg
                   lg:text-2xl
                   text-white
-                "
+                
+                  `}
                     onClick={handleNextCategory}
                   >
                     Next
@@ -398,14 +407,15 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                 ) : (
                   <button
                     type="submit"
-                    className="
+                    className={`
+                      ${currentCategory > 0 ? "w-3/4" : "w-full"}
                   btn btn-success 
                   w-1/3
                   lg:w-1/5
                   text-lg
                   lg:text-2xl
                   text-white
-                "
+                `}
                     disabled={!isCurrentCategoryComplete()}
                   >
                     Submit

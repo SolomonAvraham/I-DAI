@@ -25,7 +25,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
   useEffect(() => {
     if (!email) {
       setShowModal(true);
-      setTimeout(() => setShowButton(true), 5000);
+      setTimeout(() => setShowButton(true), 3500);
     }
   }, [email]);
 
@@ -50,11 +50,11 @@ const ResultsPage = (userResult: ResultsPageProps) => {
   //const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
 
   return (
-    <div className="min-h-screen text-gray-700 bg-gray-100 flex flex-col items-center justify-center p-4">
+    <div className=" flex flex-col items-center justify-center px-1">
       {showModal && (
-        <div className="modal modal-open" onClick={() => setShowModal(false)}>
+        <div className="modal modal-open">
           <div
-            className="modal-box cursor-pointer grid place-items-center text-white"
+            className="modal-box bg-slate-800 cursor-pointer grid place-items-center text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="font-bold text-3xl text-center">Heads Up!</h2>
@@ -68,9 +68,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
 
             <button
               onClick={() => setShowModal(false)}
-              className={`btn btn-outline text-xl mt-3 ${
-                !showButton && "opacity-50"
-              }`}
+              className="btn btn-outline text-white text-xl mt-3"
               disabled={!showButton}
             >
               OK
@@ -78,7 +76,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
           </div>
         </div>
       )}
-      <div className="bg-white shadow-xl rounded-lg p-8 max-w-2xl lg:w-[45rem] w-full ">
+      {/* <div className="bg-white shadow-xl rounded-lg p-2 w-[48rem] max-w-2xl lg:w-[45rem] mx-auto">   */}
         <div className="text-center py-5 mb-1">
           <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
             No one knows when, But we know how{" "}
@@ -111,7 +109,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
         <h2 className="text-xl lg:text-2xl font-semibold text-center">
           Thanks for sharing your data with the world
         </h2>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

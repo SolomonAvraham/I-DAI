@@ -28,7 +28,7 @@ const FactDisplay: React.FC<FactDisplayProps> = ({ facts }) => {
 
   return (
     <motion.div
-      className="absolute w-52 h-52 bg-white rounded-full shadow-xl flex items-center justify-center z-40"
+      className="absolute w-52 h-52 bg-white rounded-full shadow-xl hidden md:flex items-center justify-center z-40"
       style={{ top: "30%", left: "3%", transform: "translate(-50%, -50%)" }}
       animate={{
         x: [0, 50, -50, 0], // Moving left and right

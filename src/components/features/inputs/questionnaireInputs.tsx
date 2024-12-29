@@ -48,7 +48,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   const errorClasses = error ? "border-red-500 focus:border-red-500" : "";
 
   const inputBaseClasses = `
-    w-full   max-w-xs 
+    w-full max-w-xs 
     bg-slate-100 text-black 
     focus:outline-blue-500 focus:ring-2 focus:ring-blue-200
   `;
@@ -79,17 +79,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               className={`
               ${inputBaseClasses} ${errorClasses}
             input input-bordered border-black border-[0.001px] text-center text-black
-            ${
-              question.name === "income" ||
-              (question.name === "trafficViolations" && "md:w-11/12")
-            }
-              ${question.name === "age" && "w-4/12 md:w-11/12"}
-              ${question.name === "bmi" && " w-11/12 "}
+            ${question.name === "trafficViolations" && "w-7 md:w-11/12"}
+            ${question.name === "age" && "w-4/12 md:w-11/12"}
+            ${question.name === "bmi" && " w-11/12 "} 
             `}
               required
             />
             {question.name === "income" && (
-              <span className="text-black px-2 text-lg">$</span>
+              <span className="text-black px-2 md:text-lg">$</span>
             )}
           </div>
           <ErrorMessage />

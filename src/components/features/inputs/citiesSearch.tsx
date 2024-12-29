@@ -139,7 +139,7 @@ export function CitiesSearch({
         placeholder={`Search cities in ${country}...`}
         className={`${errorClasses} border select select-bordered placeholder:text-center
               bg-slate-100 text-black  
-              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-full text-center rounded-lg  placeholder-shown:text-xs placeholder-shown:text-start`}
+              focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-5/12 md:w-full text-center rounded-lg  placeholder-shown:text-xs placeholder-shown:text-start`}
         disabled={disabled}
         required
       />

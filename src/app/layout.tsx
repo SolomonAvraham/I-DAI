@@ -93,10 +93,10 @@ export default async function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="">
+      <body className=" ">
         <SessionProvider session={session}>
           <QueryProvider>
-            <main className="min-high-screen">
+            <main className=" high-screen">
               <header className="">
                 <Navbar />
               </header>

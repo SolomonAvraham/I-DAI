@@ -52,13 +52,13 @@ export default function Navbar() {
   const routing =
     usePathName === "/signin" ||
     usePathName === "/user/questions" ||
-    usePathName.startsWith("/user/result")  
+    usePathName.startsWith("/user/result");
 
   return (
     <nav
       className={`
         ${routing ? "bg-gray-100" : "bg-transparent"}
-        navbar  text-black flex items-center justify-between px-6 py-2 z-50`}
+        navbar  text-black flex items-center justify-between md:px-6 md:py-2 z-50`}
     >
       <button
         onClick={() => {
@@ -72,54 +72,51 @@ export default function Navbar() {
       >
         I-DAI
       </button>
-      <div
-        className={` text-white
-          text order-2 ${hideUserInfo && "hidden"} gap-1 items-center`}
-      >
-        {!hideUserInfo && name && (
-          <>
-            <div className="text-sm text-black cursor-default">
-              <p className="font-semibold">Hello, {name}.</p>
-            </div>
+      {!hideUserInfo && name && (
+        <div
+          className="order-2 inline-flex items-center gap-1"
+        >
+          <p className="text-sm font-semibold text-black cursor-default">
+            Hello, {name}.
+          </p>
 
-            <div className="dropdown dropdown-end">
-              <label
-                tabIndex={0}
-                className="btn btn-ghost btn-circle avatar cursor-default"
-              >
-                <div className=" cursor-pointer  rounded-full">
-                  {image ? (
-                    <Image
-                      width={40}
-                      height={40}
-                      src={image}
-                      alt={`${name}'s Avatar`}
-                    />
-                  ) : (
-                    <span className="text-black  text-4xl">
-                      <FaUserCircle />
-                    </span>
-                  )}
-                </div>
-              </label>
+          <div className="dropdown dropdown-end">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle avatar cursor-default"
+            >
+              <div className=" cursor-pointer  rounded-full">
+                {image ? (
+                  <Image
+                    width={40}
+                    height={40}
+                    src={image}
+                    alt={`${name}'s Avatar`}
+                  />
+                ) : (
+                  <span className="text-black text-4xl">
+                    <FaUserCircle />
+                  </span>
+                )}
+              </div>
+            </label>
 
-              <ul
-                tabIndex={0}
-                className="mt-3 z-50 p-2 gap-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <button
-                    onClick={handleSignOut}
-                    className="btn btn-error w-1/2 mx-auto"
-                  >
-                    Sign Out
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </>
-        )}
-      </div>
+            <ul
+              tabIndex={0}
+              className="mt-3 z-50 p-2 gap-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-error w-1/2 mx-auto"
+                >
+                  Sign Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

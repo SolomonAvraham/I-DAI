@@ -37,7 +37,7 @@ const CountdownTimer = () => {
       <h1 className="md:text-2xl text-sm text-center font-bold mb-4">
         This AI system is free to use for the next:
       </h1>
-      <div className="md:text-3xl text-center font-medium">
+      <div className="text-sm md:text-3xl text-center font-medium">
         <p>
           Days: {timeLeft.days} | Hours: {timeLeft.hours} | Minutes:{" "}
           {timeLeft.minutes} | Seconds: {timeLeft.seconds}

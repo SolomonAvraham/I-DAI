@@ -76,7 +76,7 @@ export default function TermsPopup({
   if (!showPopup) return null;
 
   return (
-    <div className="fixed text-black top-0 bottom-0 left-0 right-0 inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 p-4">
+    <div className="fixed  text-black top-0 bottom-0 left-0 right-0 inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-md mx-auto border-[1px] border-black relative">
         {/* Close Button */}
         <button

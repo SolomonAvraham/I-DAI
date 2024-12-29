@@ -61,12 +61,12 @@ export default function GuestButton() {
       {/* Modal */}
       {isModalOpen && (
         <div className="modal modal-open">
-          <div className="modal-box  bg-slate-50 flex flex-col items-center justify-center">
+          <div className="modal-box  bg-slate-50 flex flex-col items-center justify-center gap-3">
             <h2 className="font-bold text-lg">Enter Your Nickname here</h2>
             <input
               id="randomInput"
               type="text"
-              className="input input-bordered text-center w-full border border-gray-400 bg-slate-100 md:w-1/2 my-4"
+              className="input input-bordered text-center w-9/12 border border-gray-400 bg-slate-100 md:w-1/2"
               placeholder={`Guest ${randomNumber.toString()}`}
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
@@ -78,7 +78,7 @@ export default function GuestButton() {
                   setIsModalOpen(false);
                   handleGuest();
                 }}
-                className="btn btn-lg btn-ghost border border-gray-400"
+                className="btn btn-sm btn-ghost border border-gray-400"
               >
                 Enter
               </button>
