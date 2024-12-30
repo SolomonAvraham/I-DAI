@@ -141,7 +141,7 @@ export function CountriesSearch({
         placeholder="Search Country"
         className={`${errorClasses} select select-bordered border-black border-[0.001px] placeholder:text-center
         bg-slate-100 text-black  
-        focus:outline-blue-500 focus:ring-1 focus:ring-blue-200  w-5/12 md:w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center${errorClasses} `}
+        focus:outline-blue-500 focus:ring-1 focus:ring-blue-200 lg:w-auto  w-full text-center rounded-lg  placeholder-shown:text-sm placeholder-shown:text-center ${errorClasses} `}
         required
       />
       {!selectedCountry && isDropdownOpen && results.length > 0 && (

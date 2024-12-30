@@ -14,9 +14,8 @@ export function UseSendQuestionsMutation() {
       localStorage.removeItem("questionnaireProgress");
     },
     onError: (error) => {
-      //APIError
       console.log(error);
-      alert(error);
+      alert("error, please try again");
     },
   });
 }

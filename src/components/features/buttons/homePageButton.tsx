@@ -30,7 +30,7 @@ export default function HomePageButton({
     <>
       <button
         onClick={handleClick}
-        className="bg-slate-800  hover:bg-slate-600 px-6 py-3 justify-center rounded-md text-white flex flex-col font-bold text-xl md:text-3xl lg:text-4xl xl:text-5xl tracking-widest"
+        className="bg-slate-800  hover:bg-slate-600 px-6 py-3 justify-center rounded-md text-white flex flex-col font-bold text-xl md:text-3xl  xl:text-5xl tracking-widest"
       >
         START
       </button>

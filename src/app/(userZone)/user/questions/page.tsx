@@ -22,7 +22,7 @@ export default async function QuestionsPage() {
   }
 
   return (
-    <div className="py-16 bg-gray-100 min-h-screen">
+    <div className="py-5 bg-gray-100  min-h-screen ">
       <QuestionnaireForm {...userGoogle} />
     </div>
   );

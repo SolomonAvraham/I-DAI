@@ -17,7 +17,7 @@ const KoFiButton: React.FC = () => {
         alt="Ko-fi Logo"
         width={170}
         height={170}
-        className="md:animate-bounce"
+        className="animate-bounce"
       />
     </div>
   );

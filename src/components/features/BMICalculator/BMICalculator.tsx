@@ -49,10 +49,10 @@ const BMICalculator = ({
   }, []);
 
   return (
-    <div className="h-full w-full fixed top-0 left-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div className="h-full w-full fixed  top-0 left-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="cursor-pointer text-black text-center p-3 rounded-2xl gap-4 bg-gray-100 border shadow border-gray-400"
+        className="cursor-pointer  text-black text-center p-3 rounded-2xl gap-4 bg-gray-100 shadow"
       >
         <div className="flex items-center justify-center">
           <div
@@ -75,7 +75,7 @@ const BMICalculator = ({
               type="number"
               value={weight}
               onChange={(e) => setWeight(Number(e.target.value))}
-              className="input input-bordered w-16 max-w-xs bg-gray-50"
+              className="input input-bordered border-black border-[0.001px] w-16 max-w-xs bg-gray-50"
               min={0}
               max={500}
               required
@@ -90,7 +90,7 @@ const BMICalculator = ({
               type="number"
               value={height}
               onChange={(e) => setHeight(Number(e.target.value))}
-              className="input input-bordered w-16 max-w-xs bg-gray-50"
+              className="input input-bordered w-16 border-black border-[0.001px] max-w-xs bg-gray-50"
               min={100}
               max={300}
               required

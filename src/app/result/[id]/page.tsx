@@ -97,11 +97,11 @@ export default async function PublicResultPage({ params }: PageParams) {
   const { name, result, resultImage } = userResult;
 
   return (
-    <div className="relative min-h-screen py-10 flex items-center justify-center">
+    <div className="relative min-h-screen">
       <VideoBackground />
 
-      <div className="relative container z-10 text-center flex flex-col items-center justify-center gap-10 text-white">
-        <div className="text-center py-5 mb-1 md:w-4/5">
+      <div className="relative container mx-auto z-10 text-center flex flex-col items-center justify-center gap-2 text-white">
+        <div className="text-center py-1 mb-1 md:w-4/5">
           <h1 className="text-2xl md:text-6xl tracking-wide py-2 font-bold">
             No one knows when, But we know how{" "}
             <span className="text-red-700">{name ?? "Guest"}</span> Will leave
@@ -114,7 +114,7 @@ export default async function PublicResultPage({ params }: PageParams) {
           <hr className="border-t mt-3 opacity-15 w-full md:w-1/2 mx-auto" />
         </div>
 
-        <div className="w-5/6 md:w-1/2">
+        <div className="w-5/6 md:w-[35%]">
           <Image
             src={resultImage ?? "/images/unknown.jpg"}
             alt={result?.toString() ?? "Unknown"}

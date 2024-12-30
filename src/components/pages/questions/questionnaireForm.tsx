@@ -21,6 +21,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const formHeaderRef = useRef<HTMLDivElement>(null);
+  const [showFacts, setShowFacts] = useState(true);
 
   const sendQuestionsMutation = UseSendQuestionsMutation();
   const { setUser, name: userNameStore } = useUserStore();
@@ -146,7 +147,9 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
       if (isCurrentCategoryComplete()) {
         const nextCategory = currentCategory + 1;
         setCurrentCategory(nextCategory);
-        formHeaderRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (window.innerWidth < 1024) {
+          formHeaderRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
 
         saveProgress();
       } else {
@@ -200,37 +203,40 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
 
   return (
     <>
-      <FactDisplay
-        facts={getCategoryFacts(currentCategoryName, riskCategories)}
-        categoryName={currentCategoryName}
-      />
+      {showFacts &&
+        <FactDisplay
+          facts={getCategoryFacts(currentCategoryName, riskCategories)}
+          categoryName={currentCategoryName}
+          onClose={() => setShowFacts(false)}
+        />}
       <div
         className="
+        mx-auto
+      w-11/12
       flex 
       flex-col
       justify-center 
-      items-center  
-      lg:h-[60rem]
+      items-center 
+      lg:h-[42rem]
+      xl:h-[48rem]
       text-center
       relative
     "
         ref={formHeaderRef}
       >
         {sendQuestionsMutation.isPending ? (
-          <div className="grid place-items-center h-screen w-full">
+          <div className="min-h-screen flex items-center justify-center">
             <Loading />
           </div>
         ) : (
           <div
             className="
-        w-11/12
-        lg:w-[50rem]
-        xl:w-[70rem]
+        w-full
         h-full
         bg-gray-50 
         rounded-2xl 
         shadow 
-        border-[1px]
+        border-[0.5px]
         border-gray-950
         flex 
         flex-col 
@@ -246,15 +252,16 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
           flex 
           flex-col 
           justify-center
-          h-[15%]
-          gap-3
+          h-[25%]
+          gap-3 
         "
             >
               <h2
                 className="
             text-2xl 
             md:text-6xl 
-            xl:text-7xl 
+            xl:text-7xl
+            lg:mt-4 
             text-center 
             font-bold 
             text-blue-800
@@ -263,7 +270,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
               >
                 {questions[currentCategory].category}
               </h2>
-              <hr className="border-t w-full mx-auto border-gray-200 mb-2" />
+              <hr className="border-t w-4/6 opacity-30 mx-auto border-black  mb-2" />
               <ProgressBar
                 currentCategory={currentCategory}
                 totalCategories={questions.length}
@@ -280,17 +287,21 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
           items-center
           justify-between
           flex-grow
-          h-[70%]
         "
             >
-              <div className="w-full max-w-lg space-y-6 flex flex-col justify-center flex-grow">
+              <div
+                className={` ${
+                  questions[currentCategory].category ===
+                    "General Information" && "lg:grid   grid-cols-2 gap-1"
+                } w-full max-w-2xl space-y-6 flex flex-col justify-center flex-grow`}
+              >
                 {questions[currentCategory].questions.map((question) => (
                   <div
                     key={question.name}
                     className="
                   flex 
                   flex-col
-                  lg:flex-row 
+                  md:flex-row 
                   gap-3
                   justify-center
                   items-center  
@@ -301,7 +312,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                   text-base 
                   font-medium 
                   text-black 
-                  w-full
+                  w-full 
                   flex-col
                   items-center
                   justify-center
@@ -316,8 +327,12 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                     </label>
                     <div
                       className={`w-full flex justify-center items-center ${
-                        question.name === "bmi" && "flex-col gap-5"
-                      }`}
+                        question.name === "bmi" && "flex-col gap-3"
+                      }                     ${
+                        questions[currentCategory].category ===
+                          "General Information" && " lg:mr-6"
+                      }
+`}
                     >
                       <QuestionInput
                         question={question}
@@ -339,7 +354,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
                           </span>{" "}
                           <button
                             type="button"
-                            className="text-xs text-black  border hover:shadow font-semibold hover:bg-gray-300  bg-slate-200 p-2 rounded-xl"
+                            className="text-xs text-black  border-black border-[0.001px] hover:shadow font-semibold hover:bg-gray-300  bg-slate-200 p-2 rounded-xl"
                             onClick={() => setOpenBMICalculator(true)}
                           >
                             BMI Calculator
@@ -366,7 +381,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
             lg:justify-evenly
             items-center
             p-6
-            h-[15%]
+            h-[25%]
             justify-center
             gap-6
           "

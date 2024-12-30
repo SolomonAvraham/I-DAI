@@ -93,15 +93,13 @@ export default async function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className=" ">
+      <body className="">
         <SessionProvider session={session}>
           <QueryProvider>
-            <main className=" high-screen">
-              <header className="">
-                <Navbar />
-              </header>
-              {children}
-            </main>
+            <header className="">
+              <Navbar />
+            </header>{" "}
+            <main className="">{children}</main>
           </QueryProvider>
         </SessionProvider>
         <FloatingBubble />

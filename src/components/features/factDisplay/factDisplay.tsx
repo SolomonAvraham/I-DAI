@@ -8,9 +8,10 @@ type Fact = { fact: string }; // Define the structure of a fact
 interface FactDisplayProps {
   facts: Fact[];
   categoryName?: string;
+  onClose: () => void;
 }
 
-const FactDisplay: React.FC<FactDisplayProps> = ({ facts }) => {
+const FactDisplay: React.FC<FactDisplayProps> = ({ facts, onClose }) => {
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -26,9 +27,19 @@ const FactDisplay: React.FC<FactDisplayProps> = ({ facts }) => {
     return () => clearInterval(intervalId);
   }, [facts.length]);
 
+
+  const handleClose = () => {
+    setIsVisible(false);
+    // Add a small delay to allow exit animation
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
+
   return (
     <motion.div
-      className="absolute w-52 h-52 bg-white rounded-full shadow-xl hidden md:flex items-center justify-center z-40"
+      className="absolute w-52 h-52 bg-white rounded-full shadow-xl hidden md:flex border border-black/20 items-center justify-center z-40"
       style={{ top: "30%", left: "3%", transform: "translate(-50%, -50%)" }}
       animate={{
         x: [0, 50, -50, 0], // Moving left and right
@@ -40,8 +51,15 @@ const FactDisplay: React.FC<FactDisplayProps> = ({ facts }) => {
         ease: "easeInOut",
       }}
     >
+      {" "}
       <div className="card-body text-center">
         <AnimatePresence mode="wait">
+          <button
+            onClick={handleClose}
+            className="absolute top-5 right-3 btn btn-xs btn-circle text-white text-sm hover:text-white/30"
+          >
+            X
+          </button>
           {isVisible && facts.length > 0 && (
             <motion.div
               key={currentFactIndex}

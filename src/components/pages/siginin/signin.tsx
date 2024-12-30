@@ -14,7 +14,7 @@ const SignIn: React.FC<SignInProps> = ({ providers }) => {
   }
 
   return (
-    <div className="text-black flex flex-col items-center justify-center container mx-auto ">
+    <div className="text-black flex flex-col items-center justify-center container mx-auto  min-h-screen">
       <h1 className="text-base text-center md:text-4xl tracking-wide font-bold  md:px-5">
         You can continue using our system without signing up or paying a dime.
         But here’s the twist: we’re on a mission to find the one person who

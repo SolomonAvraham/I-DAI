@@ -50,7 +50,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
   //const shareDescription = `Discovered your destiny. Will you dare to know yours?`;
 
   return (
-    <div className=" flex flex-col items-center justify-center px-1">
+    <div className="mb-7 text-black flex flex-col items-center justify-center px-1">
       {showModal && (
         <div className="modal modal-open">
           <div
@@ -77,17 +77,18 @@ const ResultsPage = (userResult: ResultsPageProps) => {
         </div>
       )}
       {/* <div className="bg-white shadow-xl rounded-lg p-2 w-[48rem] max-w-2xl lg:w-[45rem] mx-auto">   */}
-        <div className="text-center py-5 mb-1">
-          <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
-            No one knows when, But we know how{" "}
-            <span className="text-red-700 ">{name ?? "Guest"}</span> Will leave
-            the world:
-          </h1>
-          <hr className="border-t w-full md:w-1/2 mx-auto" />
-          <p className="text-4xl md:text-5xl text-red-700 font-bold tracking-wider mt-3">
-            {result || "Unknown"}
-          </p>
-        </div>
+      <div className="text-center py-5 mb-1">
+        <h1 className="text-2xl md:text-4xl tracking-wide py-2  font-bold ">
+          No one knows when, But we know how{" "}
+          <span className="text-red-700 ">{name ?? "Guest"}</span> Will leave
+          the world:
+        </h1>
+        <hr className="border-t w-full md:w-1/2 mx-auto" />
+        <p className="text-4xl md:text-5xl text-red-700 font-bold tracking-wider mt-3">
+          {result || "Unknown"}
+        </p>
+      </div>
+      <div className="md:w-1/2">
         <Image
           src={resultImage ?? "/images/i-dai.png"}
           alt={result.toString() ?? "Unknown"}
@@ -97,18 +98,19 @@ const ResultsPage = (userResult: ResultsPageProps) => {
           quality={75}
           placeholder="blur"
           blurDataURL={image ?? "/images/i-dai.png"}
-          className="w-full h-auto rounded-lg"
+          className="w-full h-auto   md:container  rounded-xl"
         />
-        <div className="mb-6 text-center mt-10">
-          <ShareButtons
-            shareUrl={shareUrl}
-            image={image ?? "/images/unknown.jpg"}
-          />
-        </div>
-        <hr className="border-t py-3 w-1/2 mx-auto" />{" "}
-        <h2 className="text-xl lg:text-2xl font-semibold text-center">
-          Thanks for sharing your data with the world
-        </h2>
+      </div> 
+      <div className="mb-6 text-center mt-10 lg:mt-2">
+        <ShareButtons
+          shareUrl={shareUrl}
+          image={image ?? "/images/unknown.jpg"}
+        />
+      </div>
+      <hr className="border-t py-3 w-1/2 mx-auto" />{" "}
+      <h2 className="text-xl  lg:text-2xl font-semibold text-center">
+        Thanks for sharing your data with the world
+      </h2>
       {/* </div> */}
     </div>
   );
