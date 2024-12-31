@@ -101,7 +101,7 @@ const ResultsPage = (userResult: ResultsPageProps) => {
           className="w-full h-auto   md:container  rounded-xl"
         />
       </div> 
-      <div className="mb-6 text-center mt-10 lg:mt-2">
+      <div className="mb-1 text-center mt-10 lg:mt-2">
         <ShareButtons
           shareUrl={shareUrl}
           image={image ?? "/images/unknown.jpg"}

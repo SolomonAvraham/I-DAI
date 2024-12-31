@@ -12,6 +12,7 @@ export default function Navbar() {
   const router = useRouter();
   const [hideUserInfo, setHideUserInfo] = useState(true);
   const usePathName = usePathname();
+  const { data: session } = useSession();
 
   const { name, image, setUser, clearUser } = useUserStore();
 
@@ -23,14 +24,12 @@ export default function Navbar() {
     }
   }, [usePathName]);
 
-  const { data: session } = useSession();
-
   useEffect(() => {
-    const userName = session?.user?.name;
-    if (userName) {
-      setUser({ name: userName });
+    const user = session?.user;
+    if (user) {
+      setUser({ name: user.name, image: user.image });
     }
-  }, [session?.user?.name]);
+  }, [session]);
 
   useEffect(() => {
     const storedName = localStorage.getItem("name");
@@ -73,9 +72,7 @@ export default function Navbar() {
         I-DAI
       </button>
       {!hideUserInfo && name && (
-        <div
-          className="order-2 inline-flex items-center gap-1"
-        >
+        <div className="order-2 inline-flex items-center gap-1">
           <p className="text-sm font-semibold text-black cursor-default">
             Hello, {name}.
           </p>
@@ -86,11 +83,11 @@ export default function Navbar() {
               className="btn btn-ghost btn-circle avatar cursor-default"
             >
               <div className=" cursor-pointer  rounded-full">
-                {image ? (
+                {session?.user?.image ? (
                   <Image
                     width={40}
                     height={40}
-                    src={image}
+                    src={session?.user.image ?? image}
                     alt={`${name}'s Avatar`}
                   />
                 ) : (

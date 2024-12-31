@@ -2,7 +2,7 @@ import React from "react";
 
 const LoadingPage = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-base-200">
+    <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="text-center">
         <div className="flex justify-center items-center">
           <span className="loading loading-spinner text-base-content w-16 h-16"></span>

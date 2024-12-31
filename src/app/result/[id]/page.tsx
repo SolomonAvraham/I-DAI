@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
-import VideoBackground from "@/components/layouts/nav/videoBackground";
+import VideoBackground from "@/components/layouts/videos/videoBackground";
 import { redirect } from "next/navigation";
 import { getResult } from "@/services/userService";
 import { BASE_URL } from "@/utils/axiosInstance";
@@ -33,7 +33,14 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(baseUrl),
-    keywords: ["death prediction", "fortune telling", "destiny reveal", "future prediction", "personality quiz", "fate quiz"],
+    keywords: [
+      "death prediction",
+      "fortune telling",
+      "destiny reveal",
+      "future prediction",
+      "personality quiz",
+      "fate quiz",
+    ],
     robots: {
       index: true,
       follow: true,

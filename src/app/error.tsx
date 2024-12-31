@@ -1,8 +1,8 @@
 "use client";
 
-import VideoBackground from "@/components/layouts/nav/videoBackground";
+import VideoBackground from "@/components/layouts/videos/videoBackground";
 import React from "react";
- 
+
 const ErrorPage = () => {
   return (
     <div className=" text-white relative flex justify-center items-center h-screen  text-center">

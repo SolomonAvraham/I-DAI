@@ -21,7 +21,7 @@ const questionnaireSchema: SchemaCategories = {
     gender: Joi.string().valid("Male", "Female").required().messages(messages),
     country: Joi.string().required().messages(messages),
     city: Joi.string().required().messages(messages),
-    income: Joi.number().min(0).required().messages(messages),
+    income: Joi.number().min(0).max(1000000).required().messages(messages),
     bmi: Joi.number().min(10).max(60).required().messages(messages),
     maritalStatus: Joi.string()
       .valid("Married", "Single", "Divorced", "Widowed")

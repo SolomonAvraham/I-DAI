@@ -95,7 +95,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
 
     case "select":
       return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full">
           <select
             value={currentValue === undefined ? "" : String(currentValue)}
             onChange={(e) => {
@@ -105,7 +105,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               handleInputChange(question.name, typedValue); // Pass the converted value
             }}
             className={`
-            ${inputBaseClasses} ${errorClasses}
+            ${inputBaseClasses} ${errorClasses} lg:w-44
             select select-bordered text-center border-black border-[0.0001px]
           `}
             required

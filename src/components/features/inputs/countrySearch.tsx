@@ -145,7 +145,7 @@ export function CountriesSearch({
         required
       />
       {!selectedCountry && isDropdownOpen && results.length > 0 && (
-        <div className="absolute z-10 border mt-1 bg-white max-h-48 overflow-y-auto shadow-lg w-full rounded-lg">
+        <div className="absolute z-10 border  mt-1 bg-white max-h-48 overflow-y-auto shadow-lg lg:w-52 w-full rounded-lg">
           {results.map((country) => (
             <div
               key={country.countryName}

@@ -1,10 +1,9 @@
 "use client";
 
 import HomePageButton from "@/components/features/buttons/homePageButton";
-import VideoBackground from "@/components/layouts/nav/videoBackground";
-import VideoPlayer from "@/components/layouts/nav/videoPlayer";
+import VideoBackground from "@/components/layouts/videos/videoBackground";
+import VideoPlayer from "@/components/layouts/videos/videoPlayer";
 import { useSearchParams } from "next/navigation";
-
 
 export default function Home() {
   const searchParams = useSearchParams();

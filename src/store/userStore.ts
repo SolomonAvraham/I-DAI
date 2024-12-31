@@ -10,6 +10,7 @@ interface UserState {
 
 const useUserStore = create<UserState>((set) => ({
   id: null,
+  image: null,
   name: null,
   setUser: (user) => set(() => ({ ...user })),
   clearUser: () =>

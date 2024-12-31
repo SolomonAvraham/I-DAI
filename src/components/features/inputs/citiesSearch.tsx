@@ -144,7 +144,7 @@ export function CitiesSearch({
         required
       />
       {!selectedCity && isDropdownOpen && cityResults.length > 0 && (
-        <div className="absolute z-10 border mt-1 bg-white max-h-48 overflow-y-auto shadow-lg w-full rounded-lg">
+        <div className="absolute z-10 border mt-1 bg-white max-h-48 overflow-y-auto shadow-lg w-full lg:w-52 rounded-lg">
           {cityResults.map((city) => (
             <div
               key={city}

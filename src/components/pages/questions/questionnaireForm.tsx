@@ -16,7 +16,15 @@ import riskCategories from "@/utils/riskCategoriesData";
 import getCategoryFacts from "@/utils/getCategoryFacts";
 import { validateField, validateForm } from "@/utils/validation";
 
-const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
+const QuestionnaireForm = ({
+  id,
+  name,
+  image,
+}: {
+  id: string;
+  name: string;
+  image: string;
+}) => {
   const router = useRouter();
   const [openBMICalculator, setOpenBMICalculator] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -33,7 +41,7 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
     if (id) {
       localStorage.setItem("userId", id);
       localStorage.setItem("name", name);
-      setUser({ id, name });
+      setUser({ id, name, image });
     }
   }, [id]);
 
@@ -203,12 +211,13 @@ const QuestionnaireForm = ({ id, name }: { id: string; name: string }) => {
 
   return (
     <>
-      {showFacts &&
+      {showFacts && (
         <FactDisplay
           facts={getCategoryFacts(currentCategoryName, riskCategories)}
           categoryName={currentCategoryName}
           onClose={() => setShowFacts(false)}
-        />}
+        />
+      )}
       <div
         className="
         mx-auto
