@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const bodyToArray = new Array(body.completeResponses);
+    // const bodyToArray = new Array(body.completeResponses);
     const id = body.userId;
     const userName = body.userName;
 

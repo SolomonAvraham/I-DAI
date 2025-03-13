@@ -1,7 +1,7 @@
 "use client";
 
 import GuestButton from "@/components/features/buttons/guestButton";
-import CountdownTimer from "@/components/features/counter/counter";
+// import CountdownTimer from "@/components/features/counter/counter";
 import { ClientSafeProvider, signIn,  } from "next-auth/react";
 
 interface SignInProps {
