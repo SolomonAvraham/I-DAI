@@ -230,7 +230,7 @@ export const termsAndPolicy = {
             {
               type: "paragraph",
               content:
-                "For inquiries or deletion requests, contact: [Your Contact Information].",
+                "For inquiries or deletion requests, contact:",
             },
           ],
         },

@@ -1,4 +1,4 @@
-import type { Metadata, MetadataRoute, Viewport } from "next";
+import type { Metadata,  Viewport } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/providers/sessionProvider/sessionProvider";
@@ -12,17 +12,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/admin/", "/_next/", "/static/"],
-    },
-    sitemap: "https://i-dai.com/sitemap.xml",
-    host: "https://i-dai.com",
-  };
-}
+ 
 
 const imageUrl = "/images/Death due to extreme laughter.jpg";
 
@@ -78,7 +68,10 @@ export const metadata: Metadata = {
     images: [imageUrl],
   },
   verification: {
-    google: process.env.GOOGLE_CLIENT_SECRET,
+    google: "6weViLacn2yP7-SoVboEMltL6voLiTGSMUBfJphiWqI",
+  },
+  alternates: {
+    canonical: "https://www.i-dai.com/",
   },
 };
 
@@ -92,6 +85,21 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "i-dai",
+              url: "https://www.i-dai.com",
+            }),
+          }}
+        />
+        <meta
+          name="google-site-verification"
+          content="6weViLacn2yP7-SoVboEMltL6voLiTGSMUBfJphiWqI"
+        />
       </head>
       <body className="">
         <SessionProvider session={session}>

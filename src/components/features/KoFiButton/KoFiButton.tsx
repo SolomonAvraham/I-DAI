@@ -15,8 +15,8 @@ const KoFiButton: React.FC = () => {
       <Image
         src="/icons/Ko-Fi/support_me_on_kofi_badge_dark.png"
         alt="Ko-fi Logo"
-        width={170}
-        height={170}
+        width={150}
+        height={150}
         className="animate-bounce"
       />
     </div>

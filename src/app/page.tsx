@@ -10,20 +10,20 @@ export default function Home() {
   const shouldTriggerButton = searchParams.get("trigger") === "true";
 
   return (
-    <div className=" grid place-items-center md:inline  text-white min-h-screen relative">
+    <div className=" grid place-items-start md:inline  text-white min-h-screen relative">
       <VideoBackground />
 
-      <div className="grid gap-7 md:gap-3 lg:gap-0 xl:gap-2">
-        <div className="font-semibold lg:mt-0 md:px-5  text-center md:text-left md:mt-10">
-          <h1 className="tracking-wider md:text-left text-2xl md:text-6xl xl:text-8xl">
+      <div className="grid gap-3 mt-5 lg:mt-0  lg:gap-0 xl:gap-2">
+        <div className="font-semibold px-5  text-left">
+          <h1 className="tracking-wider text-xl md:text-5xl xl:text-8xl">
             Statistically Speaking:
           </h1>
-          <h2 className="md:tracking-wide text-3xl md:text-6xl lg:text-7xl xl:text-8xl">
+          <h2 className="md:tracking-wide text-2xl md:text-5xl lg:text-7xl xl:text-8xl">
             While Life Ends, Data Lives
           </h2>
         </div>
 
-        <div className="w-[90%] lg:w-1/2 xl:w-5/12  max-w-4xl aspect-video mx-auto lg:mb-2 lg:mt-4 mt-10 mb-10">
+        <div className="w-[90%] lg:w-[40%] xl:w-5/12  max-w-4xl aspect-video mx-auto lg:mb-2 lg:mt-4 mt-10 mb-10">
           <VideoPlayer />
         </div>
 

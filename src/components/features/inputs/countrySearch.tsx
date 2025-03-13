@@ -159,17 +159,19 @@ export function CountriesSearch({
         </div>
       )}
       {loading && (
-        <h1 className="text-center text-xs mt-1 font-medium">Loading...</h1>
+        <h1 className="text-center  lg:ml-14 text-xs mt-1 font-medium">
+          Loading...
+        </h1>
       )}
       {error ? (
-        <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
+        <h1 className="text-center lg:text-right  text-xs mt-1 font-semibold text-red-500">
           {error}
         </h1>
       ) : (
         formError &&
         !selectedCountry &&
         !loading && (
-          <h1 className="text-center text-xs mt-1 font-semibold text-red-500">
+          <h1 className="text-center lg:text-right  text-xs mt-1 font-semibold text-red-500">
             {formError === '"country" must be a string'
               ? "This field is required"
               : formError}

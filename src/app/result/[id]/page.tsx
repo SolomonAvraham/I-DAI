@@ -75,7 +75,7 @@ export async function generateMetadata({
       creator: "@Dev-Sol",
     },
     verification: {
-      google: process.env.GOOGLE_CLIENT_SECRET,
+      google: "6weViLacn2yP7-SoVboEMltL6voLiTGSMUBfJphiWqI",
     },
     alternates: {
       canonical: `${baseUrl}/result/${id}`,

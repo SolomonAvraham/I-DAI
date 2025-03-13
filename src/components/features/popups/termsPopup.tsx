@@ -2,8 +2,8 @@
 
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { IoMdMail } from "react-icons/io";
 
-// Updated interfaces to match the exact data structure
 interface DetailItem {
   type: string;
   content?: string;
@@ -21,8 +21,6 @@ interface Section {
   content: string;
   subsections: Subsection[];
 }
-
- 
 
 import { termsAndPolicy } from "@/utils/termsAndPolicy";
 
@@ -108,7 +106,7 @@ export default function TermsPopup({
               <h1 className="text-lg md:text-xl font-bold text-center mb-2">
                 {section.content}
               </h1>
-              {section.subsections.map((sub: Subsection,  ) => (
+              {section.subsections.map((sub: Subsection) => (
                 <div className="pb-2" key={sub.content}>
                   <hr className="border-t mb-2 w-2/4 mx-auto border-gray-300" />
                   <h2 className="text-md md:text-lg font-bold">
@@ -118,10 +116,20 @@ export default function TermsPopup({
                     if (detail.type === "paragraph") {
                       return (
                         <p
-                          className="font-serif text-sm md:text-base mb-2"
+                          className={`
+                            ${
+                              sub.content === "9. Contact Information" &&
+                              "flex flex-col items-center gap-1"
+                            }
+                            font-serif text-sm md:text-base mb-2`}
                           key={idx}
                         >
                           {detail.content}
+                          {sub.content === "9. Contact Information" && (
+                            <a className='text-2xl' href="mailto:zvitubul@gmail.com" target="_blank">
+                              <IoMdMail />
+                            </a>
+                          )}
                         </p>
                       );
                     } else if (detail.type === "list" && detail.items) {

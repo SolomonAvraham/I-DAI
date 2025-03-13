@@ -21,7 +21,7 @@ const FloatingBubble: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="hidden fixed bottom-5 right-5 md:flex flex-col items-center space-y-2 z-40">
+    <div className="hidden fixed bottom-5 right-5 lg:flex flex-col items-center space-y-2 z-40">
       {/* Main Floating Bubble */}
       <div
         className="relative border border-slate-800 bg-slate-900 text-white flex items-center justify-center text-center rounded-full shadow-lg animate-bounce-slow"
